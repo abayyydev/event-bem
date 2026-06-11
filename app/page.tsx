@@ -91,7 +91,7 @@ export default function Home() {
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-6 max-w-4xl">
-            BEM El Rahma <br className="hidden md:block"/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Wadah Kreativitas & Inovasi</span>
+            BEM El Rahma <br className="hidden md:block" /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Wadah Kreativitas & Inovasi</span>
           </h1>
 
           <p className="text-lg md:text-xl text-slate-300 max-w-2xl mb-10 leading-relaxed">
@@ -337,44 +337,7 @@ export default function Home() {
       </section>
 
       {/* Gallery Section */}
-      <section className="py-24 bg-slate-50 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 rounded-full -translate-y-32 translate-x-32"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/5 rounded-full translate-y-40 -translate-x-40"></div>
 
-        <div className="container mx-auto px-6 max-w-7xl relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Galeri Kegiatan</h2>
-            <div className="w-24 h-1.5 bg-gradient-to-r from-indigo-500 to-purple-400 mx-auto rounded-full mb-6"></div>
-            <p className="text-slate-600 max-w-3xl mx-auto text-lg">
-              Dokumentasi momen-momen berharga dalam berbagai kegiatan BEM El Rahma.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            {[
-              "https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=800&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=800&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=800&auto=format&fit=crop",
-            ].map((src, idx) => (
-              <div key={idx} className="aspect-square overflow-hidden rounded-xl shadow-md group">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img 
-                  src={src} 
-                  alt={`Galeri Kegiatan ${idx + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 cursor-pointer"
-                />
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Link href="#gallery" className="inline-flex items-center text-indigo-600 font-bold hover:text-indigo-800 transition-colors group">
-              Lihat Galeri Lengkap <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* Call to Action */}
       <section className="py-24 bg-indigo-600 relative overflow-hidden">
@@ -418,7 +381,7 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            
+
             <div>
               <h4 className="text-white font-bold text-lg mb-6">Tautan Cepat</h4>
               <ul className="space-y-4">
@@ -428,13 +391,13 @@ export default function Home() {
                 <li><a href="/register" className="hover:text-indigo-400 transition-colors">Pendaftaran Anggota</a></li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="text-white font-bold text-lg mb-6">Hubungi Kami</h4>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" />
-                  <span className="text-sm">Sekretariat BEM STMIK El Rahma<br/>Jl. Sisingamangaraja No.76, Brontokusuman, Yogyakarta</span>
+                  <span className="text-sm">Sekretariat BEM STMIK El Rahma<br />Jl. Sisingamangaraja No.76, Brontokusuman, Yogyakarta</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-5 h-5 flex items-center justify-center shrink-0">
@@ -449,7 +412,7 @@ export default function Home() {
               </ul>
             </div>
           </div>
-          
+
           <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-center md:text-left">
               &copy; {new Date().getFullYear()} BEM El Rahma. Wadah Kreativitas & Inovasi. All rights reserved.
