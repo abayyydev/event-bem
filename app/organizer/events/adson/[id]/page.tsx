@@ -1,4 +1,6 @@
 "use client";
+import { getBackendBaseUrl } from "@/lib/axios";
+
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
@@ -279,7 +281,7 @@ export default function KelolaAdsonPage() {
                             {/* Image Placeholder */}
                             <div className="h-48 bg-gray-100 relative">
                                 {adson.gambar ? (
-                                    <img src={adson.gambar.startsWith('blob:') ? adson.gambar : `http://localhost:5000${adson.gambar}`} alt={adson.nama_barang} className="w-full h-full object-cover" />
+                                    <img src={adson.gambar.startsWith('blob:') ? adson.gambar : `${getBackendBaseUrl()}${adson.gambar}`} alt={adson.nama_barang} className="w-full h-full object-cover" />
                                 ) : (
                                     <div className="w-full h-full flex flex-col items-center justify-center text-gray-400">
                                         <ImageIcon className="w-10 h-10 mb-2 opacity-50" />
@@ -360,7 +362,7 @@ export default function KelolaAdsonPage() {
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
                   {formData.gambar && (
                     <div className="mt-3">
-                        <img src={formData.gambar.startsWith('blob:') ? formData.gambar : `http://localhost:5000${formData.gambar}`} alt="Preview" className="h-24 w-auto rounded-lg object-cover border border-gray-200" />
+                        <img src={formData.gambar.startsWith('blob:') ? formData.gambar : `${getBackendBaseUrl()}${formData.gambar}`} alt="Preview" className="h-24 w-auto rounded-lg object-cover border border-gray-200" />
                     </div>
                   )}
                 </div>

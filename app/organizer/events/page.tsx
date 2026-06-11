@@ -1,4 +1,6 @@
 "use client";
+import { getBackendBaseUrl } from "@/lib/axios";
+
 
 import { useEffect, useState, useRef } from "react";
 import {
@@ -205,7 +207,7 @@ export default function KelolaEventPage() {
                             <div className="relative h-16 w-24 flex-shrink-0 overflow-hidden rounded-lg shadow-md border border-gray-200 group-hover:shadow-lg transition-all">
                               {event.poster ? (
                                 // eslint-disable-next-line @next/next/no-img-element
-                                <img src={`http://localhost:5000/uploads/${event.poster}`} alt="poster" className="h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-500" />
+                                <img src={`${getBackendBaseUrl()}/uploads/${event.poster}`} alt="poster" className="h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-500" />
                               ) : (
                                 <div className="h-full w-full bg-gray-100 flex items-center justify-center text-gray-400">
                                   <ImageIcon className="w-6 h-6" />

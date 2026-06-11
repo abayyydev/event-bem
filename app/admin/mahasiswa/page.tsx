@@ -1,4 +1,6 @@
 "use client";
+import { getBackendBaseUrl } from "@/lib/axios";
+
 
 import { useEffect, useState } from "react";
 import { 
@@ -350,7 +352,7 @@ export default function ManageMahasiswaPage() {
                           <div className="flex items-center gap-3">
                             <div className="h-10 w-10 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center font-bold text-indigo-700 overflow-hidden shrink-0 text-sm uppercase">
                               {mhs.foto_mahasiswa ? (
-                                <img src={mhs.foto_mahasiswa.startsWith('http') ? mhs.foto_mahasiswa : `http://localhost:5000/uploads/${mhs.foto_mahasiswa}`} alt="" className="h-full w-full object-cover" />
+                                <img src={mhs.foto_mahasiswa.startsWith('http') ? mhs.foto_mahasiswa : `${getBackendBaseUrl()}/uploads/${mhs.foto_mahasiswa}`} alt="" className="h-full w-full object-cover" />
                               ) : (
                                 mhs.nama_lengkap.slice(0, 2)
                               )}

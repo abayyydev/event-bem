@@ -1,4 +1,6 @@
 "use client";
+import { getBackendBaseUrl } from "@/lib/axios";
+
 
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
@@ -143,7 +145,7 @@ export default function DetailEventPage() {
               <div className="bg-white rounded-3xl shadow-lg border border-slate-100 overflow-hidden">
                 <div className="h-[300px] bg-slate-200 relative overflow-hidden">
                   {event.poster ? (
-                    <img src={`http://localhost:5000/uploads/${event.poster}`} className="w-full h-full object-cover" alt="" />
+                    <img src={`${getBackendBaseUrl()}/uploads/${event.poster}`} className="w-full h-full object-cover" alt="" />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-indigo-800 to-indigo-900 flex items-center justify-center">
                       <Calendar className="w-16 h-16 text-white/20" />
@@ -215,7 +217,7 @@ export default function DetailEventPage() {
                         <div className="flex flex-wrap gap-4">
                           {data.sponsors.map((s: any) => (
                             <div key={s.id} className="w-24 h-24 bg-white border border-slate-200 rounded-xl p-3 flex items-center justify-center">
-                              <img src={`http://localhost:5000/uploads/${s.logo}`} alt={s.nama_sponsor} className="max-w-full max-h-full object-contain grayscale hover:grayscale-0 transition" title={s.nama_sponsor} />
+                              <img src={`${getBackendBaseUrl()}/uploads/${s.logo}`} alt={s.nama_sponsor} className="max-w-full max-h-full object-contain grayscale hover:grayscale-0 transition" title={s.nama_sponsor} />
                             </div>
                           ))}
                         </div>

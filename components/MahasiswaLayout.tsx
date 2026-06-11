@@ -1,4 +1,6 @@
 "use client";
+import { getBackendBaseUrl } from "@/lib/axios";
+
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -176,7 +178,7 @@ export default function MahasiswaLayout({ children }: MahasiswaLayoutProps) {
                   <div className="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center shrink-0 overflow-hidden border border-slate-200">
                     {user.foto_mahasiswa ? (
                       <img 
-                        src={user.foto_mahasiswa.startsWith('http') ? user.foto_mahasiswa : `http://localhost:5000/uploads/${user.foto_mahasiswa}`} 
+                        src={user.foto_mahasiswa.startsWith('http') ? user.foto_mahasiswa : `${getBackendBaseUrl()}/uploads/${user.foto_mahasiswa}`} 
                         alt={user.name} 
                         className="w-full h-full object-cover" 
                       />

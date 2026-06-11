@@ -1,4 +1,6 @@
 "use client";
+import { getBackendBaseUrl } from "@/lib/axios";
+
 
 import React, { useState, useEffect } from "react";
 import { LogOut, Calendar, Bell, User as UserIcon, Menu, X, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
@@ -144,7 +146,7 @@ export default function DashboardLayout({ user, title, subtitle, links, onLogout
                   <div className="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center shrink-0 overflow-hidden border border-slate-200">
                     {user.foto_profil ? (
                       <img 
-                        src={user.foto_profil.startsWith('http') ? user.foto_profil : `http://localhost:5000/uploads/${user.foto_profil}`} 
+                        src={user.foto_profil.startsWith('http') ? user.foto_profil : `${getBackendBaseUrl()}/uploads/${user.foto_profil}`} 
                         alt={user.name} 
                         className="w-full h-full object-cover" 
                       />

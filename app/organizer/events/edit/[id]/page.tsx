@@ -1,4 +1,6 @@
 "use client";
+import { getBackendBaseUrl } from "@/lib/axios";
+
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
@@ -125,7 +127,7 @@ export default function EditEventPage() {
         });
 
         if (data.poster) {
-            setPosterPreview(`http://localhost:5000/uploads/${data.poster}`);
+            setPosterPreview(`${getBackendBaseUrl()}/uploads/${data.poster}`);
         }
 
         if (data.sponsors && Array.isArray(data.sponsors)) {
@@ -133,7 +135,7 @@ export default function EditEventPage() {
                 id: sp.id,
                 nama: sp.nama_sponsor || "",
                 logo: null,
-                logoPreview: sp.logo ? `http://localhost:5000/uploads/${sp.logo}` : null,
+                logoPreview: sp.logo ? `${getBackendBaseUrl()}/uploads/${sp.logo}` : null,
                 logo_lama: sp.logo || "",
             })));
         }

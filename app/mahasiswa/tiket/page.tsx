@@ -1,4 +1,6 @@
 "use client";
+import { getBackendBaseUrl } from "@/lib/axios";
+
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -53,7 +55,7 @@ export default function TiketSayaPage() {
                   <div key={row.id} className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
                     <div className="h-40 bg-gray-200 relative overflow-hidden">
                       {row.poster ? (
-                        <img src={`http://localhost:5000/uploads/${row.poster}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="" />
+                        <img src={`${getBackendBaseUrl()}/uploads/${row.poster}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="" />
                       ) : (
                         <div className="w-full h-full bg-gradient-to-br from-indigo-700 to-indigo-900 flex items-center justify-center"><Calendar className="w-8 h-8 text-white/30" /></div>
                       )}

@@ -1,4 +1,6 @@
 "use client";
+import { getBackendBaseUrl } from "@/lib/axios";
+
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -114,7 +116,7 @@ export default function RiwayatTransaksiPage() {
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-lg bg-slate-200 shrink-0 overflow-hidden">
                               {row.poster ? (
-                                <img src={`http://localhost:5000/uploads/${row.poster}`} className="w-full h-full object-cover" alt="" />
+                                <img src={`${getBackendBaseUrl()}/uploads/${row.poster}`} className="w-full h-full object-cover" alt="" />
                               ) : (
                                 <div className="w-full h-full bg-slate-300 flex items-center justify-center"><Calendar className="w-4 h-4 text-slate-500" /></div>
                               )}

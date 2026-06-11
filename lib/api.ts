@@ -1,9 +1,9 @@
 import axios from "axios";
+import { getDynamicApiUrl } from "./axios";
 
 // Membuat instance axios global yang bisa di-reuse di seluruh aplikasi
 const api = axios.create({
-  // Menggunakan environment variable jika ada, jika tidak gunakan default localhost
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api",
+  baseURL: getDynamicApiUrl(),
   headers: {
     "Content-Type": "application/json",
   },
@@ -13,6 +13,8 @@ const api = axios.create({
 // Otomatis menyisipkan Token JWT ke setiap request ke Backend jika user sudah login
 api.interceptors.request.use(
   (config) => {
+    config.baseURL = getDynamicApiUrl();
+    
     // Pastikan berjalan di sisi client (browser) sebelum mengakses localStorage
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("token");

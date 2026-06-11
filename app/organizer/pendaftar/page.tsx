@@ -1,4 +1,6 @@
 "use client";
+import { getBackendBaseUrl } from "@/lib/axios";
+
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -152,7 +154,7 @@ export default function KelolaPendaftarPage() {
                             {/* Image Placeholder */}
                             <div className="w-full md:w-64 h-48 md:h-auto bg-gray-100 relative shrink-0">
                                 {event.poster ? (
-                                    <img src={`http://localhost:5000/uploads/${event.poster}`} alt={event.judul} className="w-full h-full object-cover" />
+                                    <img src={`${getBackendBaseUrl()}/uploads/${event.poster}`} alt={event.judul} className="w-full h-full object-cover" />
                                 ) : (
                                     <div className="w-full h-full flex flex-col items-center justify-center text-gray-400">
                                         <span className="text-xs font-bold uppercase tracking-wider">No Image</span>

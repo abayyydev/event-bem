@@ -1,4 +1,6 @@
 "use client";
+import { getBackendBaseUrl } from "@/lib/axios";
+
 
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -42,7 +44,7 @@ export default function ProfilPage() {
           konfirmasi_password: ""
         });
         if (res.data.foto_mahasiswa) {
-          setFotoPreview(`http://localhost:5000/uploads/${res.data.foto_mahasiswa}`);
+          setFotoPreview(`${getBackendBaseUrl()}/uploads/${res.data.foto_mahasiswa}`);
         }
       } catch (err) { console.error(err); }
       finally { setLoading(false); }

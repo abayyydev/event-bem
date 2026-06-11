@@ -1,4 +1,6 @@
 "use client";
+import { getBackendBaseUrl } from "@/lib/axios";
+
 
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -253,7 +255,7 @@ export default function OrganizerDiskusiPage() {
                   >
                     <div className="w-10 h-10 rounded-xl bg-slate-200 shrink-0 overflow-hidden shadow-inner flex items-center justify-center">
                       {e.poster ? (
-                        <img src={`http://localhost:5000/uploads/${e.poster}`} alt="" className="w-full h-full object-cover" />
+                        <img src={`${getBackendBaseUrl()}/uploads/${e.poster}`} alt="" className="w-full h-full object-cover" />
                       ) : (
                         <Calendar className="w-5 h-5 text-slate-400" />
                       )}
@@ -294,7 +296,7 @@ export default function OrganizerDiskusiPage() {
                   </button>
                   <div className="w-10 h-10 rounded-xl bg-slate-200 shrink-0 overflow-hidden shadow-inner flex items-center justify-center">
                     {selectedEvent?.poster ? (
-                      <img src={`http://localhost:5000/uploads/${selectedEvent.poster}`} alt="" className="w-full h-full object-cover" />
+                      <img src={`${getBackendBaseUrl()}/uploads/${selectedEvent.poster}`} alt="" className="w-full h-full object-cover" />
                     ) : (
                       <Calendar className="w-5 h-5 text-slate-400" />
                     )}
@@ -458,7 +460,7 @@ export default function OrganizerDiskusiPage() {
                         
                         <div className="flex items-center gap-3 mt-2">
                           <a 
-                            href={`http://localhost:5000/uploads/${m.nama_file}`} 
+                            href={`${getBackendBaseUrl()}/uploads/${m.nama_file}`} 
                             target="_blank" 
                             rel="noopener noreferrer"
                             className="text-[9px] font-bold text-indigo-600 hover:underline flex items-center gap-0.5"

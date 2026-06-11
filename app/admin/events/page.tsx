@@ -1,4 +1,6 @@
 "use client";
+import { getBackendBaseUrl } from "@/lib/axios";
+
 
 import { useEffect, useState } from "react";
 import {
@@ -340,7 +342,7 @@ export default function ManageEventsPage() {
                                 {event.poster ? (
                                   // eslint-disable-next-line @next/next/no-img-element
                                   <img
-                                    src={`http://localhost:5000/uploads/${event.poster}`}
+                                    src={`${getBackendBaseUrl()}/uploads/${event.poster}`}
                                     alt=""
                                     className="h-full w-full object-cover"
                                   />

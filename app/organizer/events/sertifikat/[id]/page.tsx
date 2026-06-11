@@ -1,4 +1,6 @@
 "use client";
+import { getBackendBaseUrl } from "@/lib/axios";
+
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter, useParams } from "next/navigation";
@@ -266,7 +268,7 @@ export default function SertifikatSettingPage() {
                                 onMouseLeave={stopDrag}
                             >
                                 {formData.sertifikat_template ? (
-                                    <img src={formData.sertifikat_template.startsWith('blob:') ? formData.sertifikat_template : `http://localhost:5000${formData.sertifikat_template}`} alt="Preview" className="object-contain w-full h-full opacity-50 select-none pointer-events-none" />
+                                    <img src={formData.sertifikat_template.startsWith('blob:') ? formData.sertifikat_template : `${getBackendBaseUrl()}${formData.sertifikat_template}`} alt="Preview" className="object-contain w-full h-full opacity-50 select-none pointer-events-none" />
                                 ) : (
                                     <span className="text-gray-400 font-bold text-sm">Pratinjau Gambar</span>
                                 )}

@@ -1,4 +1,6 @@
 "use client";
+import { getBackendBaseUrl } from "@/lib/axios";
+
 
 import { useEffect, useState } from "react";
 import api from "../lib/axios";
@@ -259,7 +261,7 @@ export default function Home() {
                       {workshop.poster ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
-                          src={`http://localhost:5000/uploads/${workshop.poster}`}
+                          src={`${getBackendBaseUrl()}/uploads/${workshop.poster}`}
                           alt={workshop.judul}
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           onError={(e) => {

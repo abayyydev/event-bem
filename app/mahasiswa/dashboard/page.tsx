@@ -1,4 +1,6 @@
 "use client";
+import { getBackendBaseUrl } from "@/lib/axios";
+
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -142,7 +144,7 @@ export default function MahasiswaDashboard() {
                     <div key={row.id} className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden group hover:shadow-lg transition-all">
                       <div className="h-32 bg-gray-200 relative overflow-hidden">
                         {row.poster ? (
-                          <img src={`http://localhost:5000/uploads/${row.poster}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="" />
+                          <img src={`${getBackendBaseUrl()}/uploads/${row.poster}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="" />
                         ) : (
                           <div className="w-full h-full bg-gradient-to-br from-indigo-200 to-indigo-300 flex items-center justify-center">
                             <Calendar className="w-8 h-8 text-indigo-400" />
@@ -201,7 +203,7 @@ export default function MahasiswaDashboard() {
                 <div key={agenda.id} className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-lg transition-all duration-300 group flex flex-col h-full">
                   <div className="h-40 relative overflow-hidden">
                     {agenda.poster ? (
-                      <img src={`http://localhost:5000/uploads/${agenda.poster}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="" />
+                      <img src={`${getBackendBaseUrl()}/uploads/${agenda.poster}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="" />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-indigo-800 to-indigo-900 flex items-center justify-center">
                         <Calendar className="w-10 h-10 text-white/30" />
