@@ -1,0 +1,9 @@
+@echo off
+echo Mengatur batas memori Node.js ke 4GB...
+set NODE_OPTIONS=--max_old_space_size=4096
+
+echo Membersihkan cache Next.js (Turbopack bug prevention)...
+if exist ".next" rd /s /q ".next"
+
+echo Menjalankan Next.js (Webpack Mode)...
+npx next dev --webpack
