@@ -83,7 +83,7 @@ export default function ProfilPage() {
       }
       if (fotoFile) fd.append("foto_mahasiswa", fotoFile);
 
-      const res = await api.put("/mahasiswa/profil", fd, { headers: { "Content-Type": "multipart/form-data" } });
+      const res = await api.put("/mahasiswa/profil", fd);
       
       const newFoto = res.data.foto_mahasiswa;
       // Update profile state
