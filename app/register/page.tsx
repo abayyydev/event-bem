@@ -7,6 +7,7 @@ import { User, Mail, Lock, Loader2, UserPlus, Shield, Phone, Hash, Info } from "
 import axios from "axios";
 import api from "@/lib/axios"; // Changed to use standard axios instance if defined
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import Swal from 'sweetalert2';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -43,7 +44,13 @@ export default function RegisterPage() {
           no_hp_mahasiswa: formData.no_hp_mahasiswa || '-'
         };
         const response = await api.post("/auth/register/mahasiswa", payload);
-        alert(response.data.message);
+        Swal.fire({
+          icon: 'success',
+          title: 'Registrasi Berhasil',
+          text: response.data.message,
+          timer: 1500,
+          showConfirmButton: false
+        });
         router.push("/login");
       } else {
         const payload = {
@@ -55,7 +62,13 @@ export default function RegisterPage() {
           role: 'penyelenggara'
         };
         const response = await api.post("/auth/register/user", payload);
-        alert(response.data.message);
+        Swal.fire({
+          icon: 'success',
+          title: 'Registrasi Berhasil',
+          text: response.data.message,
+          timer: 1500,
+          showConfirmButton: false
+        });
         router.push("/login/admin");
       }
     } catch (err: unknown) {
@@ -75,6 +88,13 @@ export default function RegisterPage() {
       const res = await api.post('/auth/google', { token: credential, action: 'register' });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
+      Swal.fire({
+        icon: 'success',
+        title: 'Registrasi Berhasil',
+        text: 'Selamat datang di CampusEvent!',
+        timer: 1500,
+        showConfirmButton: false
+      });
       router.push('/mahasiswa/dashboard');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Gagal login via Google');

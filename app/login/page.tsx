@@ -5,6 +5,7 @@ import api from '../../lib/axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Link from 'next/link';
+import Swal from 'sweetalert2';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -32,6 +33,13 @@ export default function LoginPage() {
       });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
+      Swal.fire({
+        icon: 'success',
+        title: 'Login Berhasil',
+        text: 'Selamat datang kembali!',
+        timer: 1500,
+        showConfirmButton: false
+      });
       router.push('/mahasiswa/dashboard');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Gagal login. Periksa kembali data Anda.');
@@ -45,8 +53,15 @@ export default function LoginPage() {
         const { credential } = credentialResponse;
         const res = await api.post('/auth/google', { token: credential, action: 'login' });
         localStorage.setItem('token', res.data.token);
-      localStorage.setItem('user', JSON.stringify(res.data.user));
-      router.push('/mahasiswa/dashboard');
+        localStorage.setItem('user', JSON.stringify(res.data.user));
+        Swal.fire({
+          icon: 'success',
+          title: 'Login Berhasil',
+          text: 'Selamat datang kembali!',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        router.push('/mahasiswa/dashboard');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Gagal login via Google');
     }
