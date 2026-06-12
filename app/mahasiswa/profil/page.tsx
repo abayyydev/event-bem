@@ -83,9 +83,19 @@ export default function ProfilPage() {
       }
       if (fotoFile) fd.append("foto_mahasiswa", fotoFile);
 
-      const res = await api.put("/mahasiswa/profil", fd);
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${getBackendBaseUrl()}/api/mahasiswa/profil`, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        },
+        body: fd
+      });
       
-      const newFoto = res.data.foto_mahasiswa;
+      const resData = await response.json();
+      if (!response.ok) throw new Error(resData.message || "Gagal memperbarui profil");
+      
+      const newFoto = resData.foto_mahasiswa;
       // Update profile state
       setProfile((prev: any) => ({ ...prev, nim: form.nim, nama_lengkap: form.nama_lengkap, foto_mahasiswa: newFoto }));
       const stored = localStorage.getItem("user");
