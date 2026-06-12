@@ -40,9 +40,7 @@ export default function DashboardLayout({ user, title, subtitle, links, onLogout
         {/* Logo */}
         <div className="h-20 px-6 flex items-center justify-between border-b border-gray-100 shrink-0">
           <div className="flex items-center gap-3 overflow-hidden">
-            <div className="w-9 h-9 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200 shrink-0">
-              <span className="text-white font-black text-sm">BE</span>
-            </div>
+            <img src="/logo-bem.png" alt="Logo BEM" className="w-9 h-9 object-contain drop-shadow-md shrink-0" />
             {!isSidebarCollapsed && (
                <span className="text-lg font-extrabold text-slate-800 tracking-tight whitespace-nowrap">BEM<span className="text-indigo-600">Event</span></span>
             )}
@@ -123,9 +121,7 @@ export default function DashboardLayout({ user, title, subtitle, links, onLogout
               <p className="text-sm text-gray-500 mt-1">{subtitle}</p>
             </div>
             <div className="md:hidden flex items-center gap-2">
-               <div className="w-8 h-8 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-lg flex items-center justify-center shadow-md shadow-indigo-200 shrink-0">
-                 <span className="text-white font-black text-xs">BE</span>
-               </div>
+               <img src="/logo-bem.png" alt="Logo BEM" className="w-8 h-8 object-contain drop-shadow-md shrink-0" />
                <span className="text-lg font-extrabold text-slate-800 tracking-tight">BEM<span className="text-indigo-600">Event</span></span>
             </div>
           </div>

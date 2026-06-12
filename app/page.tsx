@@ -55,9 +55,7 @@ export default function Home() {
       <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm py-4' : 'bg-transparent py-6'}`}>
         <div className="container mx-auto px-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-800 flex items-center justify-center shadow-lg shadow-indigo-200">
-              <span className="text-white font-black text-sm">ER</span>
-            </div>
+            <img src="/logo-bem.png" alt="Logo BEM El Rahma" className="w-10 h-10 object-contain drop-shadow-md" />
             <span className={`text-2xl font-extrabold tracking-tight ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
               BEM <span className={isScrolled ? 'text-indigo-600' : 'text-indigo-400'}>El Rahma</span>
             </span>
@@ -366,9 +364,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-2 mb-6">
-                <div className="w-10 h-10 rounded-lg bg-indigo-600 flex items-center justify-center">
-                  <span className="text-white font-black text-sm">ER</span>
-                </div>
+                <img src="/logo-bem.png" alt="Logo BEM El Rahma" className="w-10 h-10 object-contain drop-shadow-md" />
                 <span className="text-2xl font-bold text-white tracking-tight">BEM <span className="text-indigo-500">El Rahma</span></span>
               </div>
               <p className="text-slate-400 leading-relaxed max-w-sm mb-6">
@@ -399,17 +395,17 @@ export default function Home() {
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" />
-                  <span className="text-sm">Sekretariat BEM STMIK El Rahma<br />Jl. Sisingamangaraja No.76, Brontokusuman, Yogyakarta</span>
+                  <span className="text-sm">Sekretariat BEM STIKOM El Rahma<br />Jl. DR. Sumeru No. 21G, Kebon Kalapa, Kec. Bogor Tengah, Kota Bogor, Jawa Barat 16125</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-5 h-5 flex items-center justify-center shrink-0">
                     <span className="text-indigo-500 font-bold">@</span>
                   </div>
-                  <span className="text-sm">bem@stmikelrahma.ac.id</span>
+                  <span className="text-sm">bemstikomelrahma25@gmail.com</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Globe className="w-5 h-5 text-indigo-500 shrink-0" />
-                  <span className="text-sm">bem.stmikelrahma.ac.id</span>
+                  <span className="text-sm">ukmelrahma.my.id</span>
                 </li>
               </ul>
             </div>
