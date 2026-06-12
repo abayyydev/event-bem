@@ -102,7 +102,7 @@ export default function LoginPage() {
                 required
                 value={formData.identifier}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all duration-200 text-gray-800 placeholder-gray-400 text-sm font-medium"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all duration-200 text-black placeholder-gray-400 text-sm font-medium"
                 placeholder="Masukkan NIM atau Email Anda"
               />
             </div>
@@ -114,7 +114,7 @@ export default function LoginPage() {
                 required
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all duration-200 text-gray-800 placeholder-gray-400 text-sm font-medium"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all duration-200 text-black placeholder-gray-400 text-sm font-medium"
                 placeholder="••••••••"
               />
             </div>

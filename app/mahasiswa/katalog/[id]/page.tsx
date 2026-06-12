@@ -261,18 +261,18 @@ export default function DetailEventPage() {
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                             <div>
                               <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Nama Lengkap</label>
-                              <input type="text" value={p.nama_peserta} onChange={(e) => updateParticipant(index, 'nama_peserta', e.target.value)} className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none text-sm" required />
+                              <input type="text" value={p.nama_peserta} onChange={(e) => updateParticipant(index, 'nama_peserta', e.target.value)} className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none text-sm text-black" required />
                             </div>
                             <div>
                               <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Email Aktif</label>
-                              <input type="email" value={p.email_peserta} onChange={(e) => updateParticipant(index, 'email_peserta', e.target.value)} className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none text-sm" required />
+                              <input type="email" value={p.email_peserta} onChange={(e) => updateParticipant(index, 'email_peserta', e.target.value)} className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none text-sm text-black" required />
                             </div>
                           </div>
 
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
                               <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">No. WhatsApp</label>
-                              <input type="text" value={p.telepon_peserta} onChange={(e) => updateParticipant(index, 'telepon_peserta', e.target.value)} className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none text-sm" required />
+                              <input type="text" value={p.telepon_peserta} onChange={(e) => updateParticipant(index, 'telepon_peserta', e.target.value)} className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none text-sm text-black" required />
                             </div>
                             <div>
                               <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Jenis Kelamin</label>
@@ -300,7 +300,7 @@ export default function DetailEventPage() {
                                     </label>
                                     {f.field_type === "select" ? (
                                       <select required={!!f.is_required} value={p.jawaban_custom[f.id] || ""} onChange={(e) => updateParticipant(index, f.id, e.target.value, true)}
-                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none text-sm appearance-none">
+                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none text-sm appearance-none text-black">
                                         <option value="">- Pilih -</option>
                                         {f.options?.split(",").map((opt: string) => (
                                           <option key={opt.trim()} value={opt.trim()}>{opt.trim()}</option>
@@ -308,7 +308,7 @@ export default function DetailEventPage() {
                                       </select>
                                     ) : (
                                       <input type="text" required={!!f.is_required} placeholder={f.placeholder} value={p.jawaban_custom[f.id] || ""} onChange={(e) => updateParticipant(index, f.id, e.target.value, true)}
-                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none text-sm" />
+                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none text-sm text-black" />
                                     )}
                                   </div>
                                 ))}

@@ -158,7 +158,7 @@ export default function ProfilPage() {
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Update Foto Profil</label>
                   <input type="file" ref={fileInputRef} accept=".jpg,.jpeg,.png" onChange={handleFotoChange}
-                    className="block w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 transition-all cursor-pointer border border-slate-200 rounded-xl" />
+                    className="block w-full text-black file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 transition-all cursor-pointer border border-slate-200 rounded-xl" />
                   <p className="text-xs text-slate-400 mt-1 ml-1">Maksimal 5MB (JPG, PNG)</p>
                 </div>
 
@@ -169,7 +169,7 @@ export default function ProfilPage() {
                     <div className="relative">
                       <User className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
                       <input type="text" value={form.nama_lengkap} onChange={(e) => setForm({ ...form, nama_lengkap: e.target.value })}
-                        className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" required />
+                        className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-black" required />
                     </div>
                   </div>
                   <div>
@@ -177,7 +177,7 @@ export default function ProfilPage() {
                     <div className="relative">
                       <QrCode className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
                       <input type="text" value={form.nim} onChange={(e) => setForm({ ...form, nim: e.target.value })}
-                        className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" required />
+                        className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-black" required />
                     </div>
                   </div>
                 </div>
@@ -188,7 +188,7 @@ export default function ProfilPage() {
                     <label className="block text-sm font-semibold text-slate-700 mb-1">Email</label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
-                      <input type="email" value={profile?.email || ""} className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50 text-slate-500 cursor-not-allowed" readOnly />
+                      <input type="email" value={profile?.email || ""} className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50 text-black cursor-not-allowed" readOnly />
                     </div>
                   </div>
                   <div>
@@ -196,7 +196,7 @@ export default function ProfilPage() {
                     <div className="relative">
                       <Phone className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
                       <input type="text" value={form.no_hp_mahasiswa} onChange={(e) => setForm({ ...form, no_hp_mahasiswa: e.target.value })}
-                        className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" />
+                        className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-black" />
                     </div>
                   </div>
                 </div>
@@ -206,12 +206,12 @@ export default function ProfilPage() {
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-1">Program Studi</label>
                     <input type="text" value={form.prodi} onChange={(e) => setForm({ ...form, prodi: e.target.value })}
-                      className="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" />
+                      className="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-black" />
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-1">Jenis Kelamin</label>
                     <select value={form.jenis_kelamin} onChange={(e) => setForm({ ...form, jenis_kelamin: e.target.value })}
-                      className="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all appearance-none bg-white">
+                      className="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all appearance-none bg-white text-black">
                       <option value="">- Pilih -</option>
                       <option value="Laki-laki">Laki-laki</option>
                       <option value="Perempuan">Perempuan</option>
@@ -227,10 +227,10 @@ export default function ProfilPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <input type="password" placeholder="Password Baru" value={form.password_baru}
                       onChange={(e) => setForm({ ...form, password_baru: e.target.value })}
-                      className="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-sm" />
+                      className="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-sm text-black" />
                     <input type="password" placeholder="Ulangi Password" value={form.konfirmasi_password}
                       onChange={(e) => setForm({ ...form, konfirmasi_password: e.target.value })}
-                      className="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-sm" />
+                      className="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-sm text-black" />
                   </div>
                   <p className="text-xs text-slate-400 mt-2">* Kosongkan jika tidak ingin mengubah password.</p>
                 </div>
