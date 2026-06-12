@@ -72,7 +72,7 @@ export default function RegisterPage() {
   const handleGoogleSuccess = async (credentialResponse: any) => {
     try {
       const { credential } = credentialResponse;
-      const res = await api.post('/auth/google', { token: credential });
+      const res = await api.post('/auth/google', { token: credential, action: 'register' });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
       router.push('/mahasiswa/dashboard');

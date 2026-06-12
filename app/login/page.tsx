@@ -40,11 +40,11 @@ export default function LoginPage() {
     }
   };
 
-  const handleGoogleSuccess = async (credentialResponse: any) => {
-    try {
-      const { credential } = credentialResponse;
-      const res = await api.post('/auth/google', { token: credential });
-      localStorage.setItem('token', res.data.token);
+    const handleGoogleSuccess = async (credentialResponse: any) => {
+      try {
+        const { credential } = credentialResponse;
+        const res = await api.post('/auth/google', { token: credential, action: 'login' });
+        localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
       router.push('/mahasiswa/dashboard');
     } catch (err: any) {
