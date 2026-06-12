@@ -77,7 +77,7 @@ export default function MahasiswaLayout({ children }: MahasiswaLayoutProps) {
           <Link href="/mahasiswa/dashboard" className="flex items-center gap-3 overflow-hidden">
             <img src="/logo-bem.png" alt="Logo BEM" className="w-9 h-9 object-contain drop-shadow-md shrink-0" />
             {!isSidebarCollapsed && (
-              <span className="text-lg font-extrabold text-slate-800 tracking-tight whitespace-nowrap">BEM<span className="text-indigo-600">El Rahma</span></span>
+              <span className="text-lg font-extrabold text-slate-800 tracking-tight whitespace-nowrap">BEM El Rahma</span>
             )}
           </Link>
         </div>
@@ -163,7 +163,7 @@ export default function MahasiswaLayout({ children }: MahasiswaLayoutProps) {
 
             <div className="md:hidden flex items-center gap-2">
               <img src="/logo-bem.png" alt="Logo BEM" className="w-8 h-8 object-contain drop-shadow-md shrink-0" />
-              <span className="text-lg font-extrabold text-slate-800 tracking-tight">BEM<span className="text-indigo-600">El Rahma</span></span>
+              <span className="text-lg font-extrabold text-slate-800 tracking-tight">BEM El Rahma</span>
             </div>
           </div>
 

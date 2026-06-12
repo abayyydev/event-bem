@@ -57,14 +57,14 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <img src="/logo-bem.png" alt="Logo BEM El Rahma" className="w-10 h-10 object-contain drop-shadow-md" />
             <span className={`text-2xl font-extrabold tracking-tight ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
-              BEM <span className={isScrolled ? 'text-indigo-600' : 'text-indigo-400'}>El Rahma</span>
+              BEM El Rahma
             </span>
           </div>
           <div className="flex gap-4 items-center">
-            <Link href="/login" className={`hidden md:block font-semibold transition-colors ${isScrolled ? 'text-slate-600 hover:text-indigo-600' : 'text-slate-100 hover:text-white'}`}>
+            <Link href="/login" className={`hidden md:block font-semibold transition-colors ${isScrolled ? 'text-slate-600 hover:text-[#ffce31]' : 'text-slate-100 hover:text-[#ffce31]'}`}>
               Login
             </Link>
-            <Link href="/register" className="px-6 py-2.5 text-sm font-bold bg-indigo-600 text-white rounded-full hover:bg-indigo-700 shadow-lg shadow-indigo-600/30 transition-all hover:-translate-y-0.5">
+            <Link href="/register" className="px-6 py-2.5 text-sm font-bold bg-[#ffce31] text-[#163a4c] rounded-full hover:bg-[#e6ba29] shadow-lg shadow-[#ffce31]/30 transition-all hover:-translate-y-0.5">
               Daftar Sekarang
             </Link>
           </div>
@@ -111,13 +111,13 @@ export default function Home() {
 
       {/* Profil / Sejarah Section */}
       <section id="profil" className="py-24 bg-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-50 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-50 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#ffce31]/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#163a4c]/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
 
         <div className="container mx-auto px-6 max-w-7xl relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Tentang BEM El Rahma</h2>
-            <div className="w-24 h-1.5 bg-gradient-to-r from-indigo-500 to-purple-400 mx-auto rounded-full mb-6"></div>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-[#163a4c] mb-4">Tentang BEM El Rahma</h2>
+            <div className="w-24 h-1.5 bg-[#ffce31] mx-auto rounded-full mb-6"></div>
             <p className="text-slate-600 max-w-3xl mx-auto text-lg">
               BEM El Rahma merupakan organisasi mahasiswa yang menjadi wadah pengembangan diri, kreativitas, dan kepemimpinan mahasiswa untuk mencapai visi bersama.
             </p>
@@ -125,17 +125,17 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div className="relative group">
-              <div className="absolute -inset-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl blur-lg opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+              <div className="absolute -inset-4 bg-[#ffce31] rounded-2xl blur-lg opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format&fit=crop"
+                src="/visi-misi.png"
                 alt="Kegiatan BEM"
                 className="rounded-2xl shadow-xl w-full object-cover relative z-10 h-full min-h-[400px] border border-white/50"
               />
               <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md p-6 rounded-xl shadow-lg z-20 border border-slate-100">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center shrink-0">
-                    <Award className="w-6 h-6 text-indigo-600" />
+                  <div className="w-12 h-12 bg-[#163a4c] rounded-full flex items-center justify-center shrink-0">
+                    <Award className="w-6 h-6 text-[#ffce31]" />
                   </div>
                   <div>
                     <h4 className="font-bold text-slate-900 text-lg">Visi & Misi BEM El Rahma</h4>
@@ -147,9 +147,9 @@ export default function Home() {
 
             <div className="space-y-8">
               <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow relative overflow-hidden group">
-                <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500 group-hover:w-2 transition-all"></div>
+                <div className="absolute top-0 left-0 w-1 h-full bg-[#ffce31] group-hover:w-2 transition-all"></div>
                 <h4 className="text-xl font-bold text-slate-900 mb-3 flex items-center gap-3">
-                  <div className="bg-indigo-100 p-2 rounded-lg"><Zap className="w-5 h-5 text-indigo-600" /></div>
+                  <div className="bg-[#163a4c] p-2 rounded-lg"><Zap className="w-5 h-5 text-[#ffce31]" /></div>
                   Visi Kami
                 </h4>
                 <p className="text-slate-600">
@@ -159,7 +159,7 @@ export default function Home() {
 
               <div className="space-y-4">
                 <h4 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-indigo-600" /> Misi Kami
+                  <CheckCircle className="w-5 h-5 text-[#ffce31]" /> Misi Kami
                 </h4>
                 <ul className="space-y-3">
                   {[
@@ -169,8 +169,8 @@ export default function Home() {
                     "Menyelenggarakan kegiatan yang bermanfaat untuk kampus dan masyarakat"
                   ].map((item, idx) => (
                     <li key={idx} className="flex items-start gap-3">
-                      <div className="mt-1 bg-indigo-100 rounded-full p-0.5">
-                        <CheckCircle className="w-3.5 h-3.5 text-indigo-600" />
+                      <div className="mt-1 bg-[#163a4c] rounded-full p-0.5">
+                        <CheckCircle className="w-3.5 h-3.5 text-[#ffce31]" />
                       </div>
                       <span className="text-slate-600">{item}</span>
                     </li>
@@ -186,17 +186,17 @@ export default function Home() {
       <section className="py-24 bg-slate-50 relative overflow-hidden border-y border-slate-200">
         <div className="container mx-auto px-6 max-w-7xl relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Program Unggulan</h2>
-            <div className="w-24 h-1.5 bg-gradient-to-r from-indigo-500 to-purple-400 mx-auto rounded-full mb-6"></div>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-[#163a4c] mb-4">Program Unggulan</h2>
+            <div className="w-24 h-1.5 bg-[#ffce31] mx-auto rounded-full mb-6"></div>
             <p className="text-slate-600 max-w-3xl mx-auto text-lg">
               Berbagai program unggulan yang diselenggarakan BEM El Rahma untuk pengembangan diri dan kontribusi sosial mahasiswa.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 border-t-4 border-t-indigo-600 group hover:-translate-y-2">
-              <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-indigo-600 transition-all duration-300">
-                <Ticket className="w-8 h-8 text-indigo-600 group-hover:text-white" />
+            <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 border-t-4 border-t-[#ffce31] group hover:-translate-y-2">
+              <div className="w-16 h-16 bg-[#163a4c]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#ffce31] transition-all duration-300">
+                <Ticket className="w-8 h-8 text-[#163a4c] group-hover:text-[#163a4c]" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-3">Program Akademik</h3>
               <p className="text-slate-600 leading-relaxed">
@@ -204,9 +204,9 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 border-t-4 border-t-purple-500 group hover:-translate-y-2">
-              <div className="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-purple-500 transition-all duration-300">
-                <Award className="w-8 h-8 text-purple-500 group-hover:text-white" />
+            <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 border-t-4 border-t-[#163a4c] group hover:-translate-y-2">
+              <div className="w-16 h-16 bg-[#163a4c]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#163a4c] transition-all duration-300">
+                <Award className="w-8 h-8 text-[#163a4c] group-hover:text-[#ffce31]" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-3">Pengabdian Masyarakat</h3>
               <p className="text-slate-600 leading-relaxed">
@@ -214,9 +214,9 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 border-t-4 border-t-amber-500 group hover:-translate-y-2">
-              <div className="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-amber-500 transition-all duration-300">
-                <Monitor className="w-8 h-8 text-amber-500 group-hover:text-white" />
+            <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 border-t-4 border-t-[#ffce31] group hover:-translate-y-2">
+              <div className="w-16 h-16 bg-[#ffce31]/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#ffce31] transition-all duration-300">
+                <Monitor className="w-8 h-8 text-[#163a4c] group-hover:text-[#163a4c]" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-3">Kewirausahaan Mahasiswa</h3>
               <p className="text-slate-600 leading-relaxed">
@@ -233,12 +233,12 @@ export default function Home() {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div>
               <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Katalog Event Terbaru</h2>
-              <div className="w-24 h-1.5 bg-gradient-to-r from-indigo-600 to-indigo-400 rounded-full mb-4"></div>
+              <div className="w-24 h-1.5 bg-[#ffce31] rounded-full mb-4"></div>
               <p className="text-slate-600 max-w-2xl text-lg">
                 Jangan lewatkan kesempatan untuk berkembang. Daftar event yang sedang buka registrasi sekarang!
               </p>
             </div>
-            <Link href="/login" className="hidden md:inline-flex items-center text-indigo-600 font-bold hover:text-indigo-800 transition-colors">
+            <Link href="/login" className="hidden md:inline-flex items-center text-[#163a4c] font-bold hover:text-[#ffce31] transition-colors">
               Lihat Semua Event <ArrowRight className="w-5 h-5 ml-2" />
             </Link>
           </div>
@@ -267,7 +267,7 @@ export default function Home() {
                           }}
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#163a4c] to-[#102a38] text-white">
                           <Calendar className="w-16 h-16 opacity-50" />
                         </div>
                       )}
@@ -279,27 +279,27 @@ export default function Home() {
                       </div>
 
                       <div className="absolute top-4 left-4 z-10">
-                        <span className="px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-md bg-indigo-600/90 backdrop-blur-md flex items-center gap-1">
+                        <span className="px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-md bg-[#163a4c]/90 backdrop-blur-md flex items-center gap-1">
                           <Globe className="w-3 h-3" /> Publik
                         </span>
                       </div>
                     </div>
 
                     <div className="p-6 flex flex-col flex-1">
-                      <div className="text-xs font-bold text-indigo-600 uppercase tracking-wider mb-2">
+                      <div className="text-xs font-bold text-[#ffce31] uppercase tracking-wider mb-2">
                         {workshop.ukm_penyelenggara || 'Event Kampus'}
                       </div>
-                      <h3 className="text-xl font-bold text-slate-900 mb-3 line-clamp-2 group-hover:text-indigo-600 transition-colors">
+                      <h3 className="text-xl font-bold text-slate-900 mb-3 line-clamp-2 group-hover:text-[#ffce31] transition-colors">
                         {workshop.judul}
                       </h3>
 
                       <div className="space-y-2 mb-4">
                         <div className="flex items-center text-slate-500 text-sm">
-                          <Clock className="w-4 h-4 mr-2 text-indigo-500 shrink-0" />
+                          <Clock className="w-4 h-4 mr-2 text-[#ffce31] shrink-0" />
                           <span className="truncate">{formatDate(workshop.tanggal_waktu)}</span>
                         </div>
                         <div className="flex items-center text-slate-500 text-sm">
-                          <MapPin className="w-4 h-4 mr-2 text-indigo-500 shrink-0" />
+                          <MapPin className="w-4 h-4 mr-2 text-[#ffce31] shrink-0" />
                           <span className="truncate">{workshop.lokasi}</span>
                         </div>
                       </div>
@@ -308,7 +308,7 @@ export default function Home() {
                         {workshop.deskripsi}
                       </p>
 
-                      <Link href={`/login`} className="block w-full text-center bg-indigo-50 text-indigo-700 hover:bg-indigo-600 hover:text-white font-bold py-3 px-4 rounded-xl transition-colors duration-300 mt-auto">
+                      <Link href={`/login`} className="block w-full text-center bg-[#ffce31]/10 text-[#163a4c] hover:bg-[#ffce31] hover:text-[#163a4c] font-bold py-3 px-4 rounded-xl transition-colors duration-300 mt-auto">
                         Daftar Sekarang
                       </Link>
                     </div>
@@ -329,7 +329,7 @@ export default function Home() {
           )}
 
           <div className="mt-8 text-center md:hidden">
-            <Link href="/login" className="inline-flex items-center text-indigo-600 font-bold hover:text-indigo-800 transition-colors">
+            <Link href="/login" className="inline-flex items-center text-[#163a4c] font-bold hover:text-[#ffce31] transition-colors">
               Lihat Semua Event <ArrowRight className="w-5 h-5 ml-2" />
             </Link>
           </div>
@@ -340,41 +340,41 @@ export default function Home() {
 
 
       {/* Call to Action */}
-      <section className="py-24 bg-indigo-600 relative overflow-hidden">
+      <section className="py-24 bg-[#ffce31] relative overflow-hidden">
         {/* We use inline SVG for pattern to avoid 404 */}
         <div className="absolute inset-0 opacity-10 mix-blend-overlay" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-black/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
 
         <div className="container mx-auto px-6 text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6">Siap Berkembang Bersama Kami?</h2>
-          <p className="text-xl text-indigo-100 mb-10 max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-5xl font-extrabold text-[#163a4c] mb-6">Siap Berkembang Bersama Kami?</h2>
+          <p className="text-xl text-[#163a4c]/80 mb-10 max-w-2xl mx-auto">
             Bergabunglah dengan BEM El Rahma dan temukan kegiatan yang tepat untuk meningkatkan kreativitas, inovasi, dan relasimu.
           </p>
-          <Link href="/register" className="inline-flex items-center justify-center px-10 py-5 bg-white text-indigo-600 font-extrabold rounded-full shadow-xl shadow-indigo-400/20 transition-all hover:scale-105 text-lg">
+          <Link href="/register" className="inline-flex items-center justify-center px-10 py-5 bg-[#163a4c] text-white font-extrabold rounded-full shadow-xl shadow-[#163a4c]/20 hover:bg-[#102a38] transition-all hover:scale-105 text-lg">
             Daftar Kegiatan Sekarang
           </Link>
         </div>
       </section>
 
       {/* Detailed Footer */}
-      <footer className="bg-slate-950 text-slate-400 py-16 border-t border-white/10 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+      <footer className="bg-[#163a4c] text-slate-300 py-16 border-t border-white/10 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
         <div className="container mx-auto px-6 max-w-7xl relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-2 mb-6">
                 <img src="/logo-bem.png" alt="Logo BEM El Rahma" className="w-10 h-10 object-contain drop-shadow-md" />
-                <span className="text-2xl font-bold text-white tracking-tight">BEM <span className="text-indigo-500">El Rahma</span></span>
+                <span className="text-2xl font-bold text-[#ffce31] tracking-tight">BEM <span className="text-[#ffce31]">El Rahma</span></span>
               </div>
               <p className="text-slate-400 leading-relaxed max-w-sm mb-6">
                 Wadah pengembangan diri, kreativitas, dan kepemimpinan mahasiswa untuk mencapai visi bersama menuju kampus yang lebih baik.
               </p>
               <div className="flex gap-4">
-                <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-colors">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#ffce31] hover:text-[#163a4c] transition-colors">
                   <Globe className="w-5 h-5" />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-colors">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#ffce31] hover:text-[#163a4c] transition-colors">
                   <Monitor className="w-5 h-5" />
                 </a>
               </div>
@@ -383,10 +383,10 @@ export default function Home() {
             <div>
               <h4 className="text-white font-bold text-lg mb-6">Tautan Cepat</h4>
               <ul className="space-y-4">
-                <li><a href="#profil" className="hover:text-indigo-400 transition-colors">Tentang Kami</a></li>
-                <li><a href="#agenda" className="hover:text-indigo-400 transition-colors">Program & Kegiatan</a></li>
-                <li><a href="/login" className="hover:text-indigo-400 transition-colors">Portal Login</a></li>
-                <li><a href="/register" className="hover:text-indigo-400 transition-colors">Pendaftaran Anggota</a></li>
+                <li><a href="#profil" className="hover:text-[#ffce31] transition-colors">Tentang Kami</a></li>
+                <li><a href="#agenda" className="hover:text-[#ffce31] transition-colors">Program & Kegiatan</a></li>
+                <li><a href="/login" className="hover:text-[#ffce31] transition-colors">Portal Login</a></li>
+                <li><a href="/register" className="hover:text-[#ffce31] transition-colors">Pendaftaran Anggota</a></li>
               </ul>
             </div>
 
@@ -394,17 +394,17 @@ export default function Home() {
               <h4 className="text-white font-bold text-lg mb-6">Hubungi Kami</h4>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" />
+                  <MapPin className="w-5 h-5 text-[#ffce31] shrink-0 mt-0.5" />
                   <span className="text-sm">Sekretariat BEM STIKOM El Rahma<br />Jl. DR. Sumeru No. 21G, Kebon Kalapa, Kec. Bogor Tengah, Kota Bogor, Jawa Barat 16125</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-5 h-5 flex items-center justify-center shrink-0">
-                    <span className="text-indigo-500 font-bold">@</span>
+                    <span className="text-[#ffce31] font-bold">@</span>
                   </div>
                   <span className="text-sm">bemstikomelrahma25@gmail.com</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <Globe className="w-5 h-5 text-indigo-500 shrink-0" />
+                  <Globe className="w-5 h-5 text-[#ffce31] shrink-0" />
                   <span className="text-sm">ukmelrahma.my.id</span>
                 </li>
               </ul>
@@ -416,8 +416,8 @@ export default function Home() {
               &copy; {new Date().getFullYear()} BEM El Rahma. Wadah Kreativitas & Inovasi. All rights reserved.
             </p>
             <div className="text-sm space-x-4">
-              <a href="#" className="hover:text-white transition-colors">Kebijakan Privasi</a>
-              <a href="#" className="hover:text-white transition-colors">Syarat & Ketentuan</a>
+              <a href="#" className="hover:text-[#ffce31] transition-colors">Kebijakan Privasi</a>
+              <a href="#" className="hover:text-[#ffce31] transition-colors">Syarat & Ketentuan</a>
             </div>
           </div>
         </div>
