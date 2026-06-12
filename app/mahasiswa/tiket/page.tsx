@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Calendar, Ticket, Clock, ArrowRight, Loader2, MapPin, QrCode } from "lucide-react";
 import MahasiswaLayout from "../../../components/MahasiswaLayout";
 import api from "../../../lib/api";
+import AktivitasTabs from "../../../components/AktivitasTabs";
 
 export default function TiketSayaPage() {
   const router = useRouter();
@@ -41,12 +42,15 @@ export default function TiketSayaPage() {
         <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 pt-10 pb-20 px-6 md:px-12 rounded-b-[3rem] shadow-xl relative overflow-hidden -mx-4 md:-mx-8 -mt-8 mb-12">
           <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-800 rounded-full opacity-50 blur-3xl -mr-16 -mt-16" />
           <div className="max-w-6xl mx-auto relative z-10 text-center">
-            <h1 className="text-3xl font-extrabold text-white mb-2">Akses Event Saya</h1>
-            <p className="text-indigo-200 text-sm">Daftar kegiatan yang dapat Anda ikuti.</p>
+            <h1 className="text-3xl font-extrabold text-white mb-2">Aktivitas Saya</h1>
+            <p className="text-indigo-200 text-sm">Kelola tiket, transaksi, sertifikat, dan diskusi Anda.</p>
           </div>
         </div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 -mt-10 relative z-20">
+          <div className="bg-white rounded-2xl shadow-sm p-4 mb-8">
+             <AktivitasTabs />
+          </div>
           {tikets.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {tikets.map((row: any) => {

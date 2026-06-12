@@ -42,7 +42,7 @@ export default function DashboardLayout({ user, title, subtitle, links, onLogout
           <div className="flex items-center gap-3 overflow-hidden">
             <img src="/logo-bem.png" alt="Logo BEM" className="w-9 h-9 object-contain drop-shadow-md shrink-0" />
             {!isSidebarCollapsed && (
-               <span className="text-lg font-extrabold text-slate-800 tracking-tight whitespace-nowrap">BEM<span className="text-indigo-600">Event</span></span>
+               <span className="text-lg font-extrabold text-slate-800 tracking-tight whitespace-nowrap">BEM<span className="text-indigo-600">El Rahma</span></span>
             )}
           </div>
         </div>
@@ -92,7 +92,7 @@ export default function DashboardLayout({ user, title, subtitle, links, onLogout
             <Link 
               key={index}
               href={link.href} 
-              className={`flex flex-col items-center justify-center w-full h-full space-y-1 relative
+              className={`flex flex-1 flex-col items-center justify-center h-full space-y-1 relative
                 ${isActive ? "text-indigo-600" : "text-gray-400 hover:text-gray-600"}`}
             >
               {isActive && (
@@ -122,7 +122,7 @@ export default function DashboardLayout({ user, title, subtitle, links, onLogout
             </div>
             <div className="md:hidden flex items-center gap-2">
                <img src="/logo-bem.png" alt="Logo BEM" className="w-8 h-8 object-contain drop-shadow-md shrink-0" />
-               <span className="text-lg font-extrabold text-slate-800 tracking-tight">BEM<span className="text-indigo-600">Event</span></span>
+               <span className="text-lg font-extrabold text-slate-800 tracking-tight">BEM<span className="text-indigo-600">El Rahma</span></span>
             </div>
           </div>
 

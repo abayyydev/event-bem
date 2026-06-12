@@ -8,6 +8,8 @@ import { MessageSquare, Calendar, Loader2, Send, ArrowLeft, Search, Users, FileT
 import MahasiswaLayout from "../../../components/MahasiswaLayout";
 import api from "../../../lib/api";
 
+import AktivitasTabs from "../../../components/AktivitasTabs";
+
 export default function DiskusiPage() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
@@ -101,7 +103,12 @@ export default function DiskusiPage() {
 
   return (
     <MahasiswaLayout>
-      <div className="h-[calc(100vh-6rem)] md:h-[calc(100vh-4rem)] flex flex-col md:flex-row bg-slate-50 border-t border-slate-200">
+      <div className="bg-white px-6 pt-4 pb-0">
+        <div className="max-w-7xl mx-auto">
+           <AktivitasTabs />
+        </div>
+      </div>
+      <div className="h-[calc(100vh-12rem)] md:h-[calc(100vh-10rem)] flex flex-col md:flex-row bg-slate-50 border-t border-slate-200">
         
         {/* Left Sidebar: Event List */}
         <div className={`w-full md:w-1/3 lg:w-1/4 bg-white border-r border-slate-200 flex flex-col ${selectedEventId ? 'hidden md:flex' : 'flex'}`}>

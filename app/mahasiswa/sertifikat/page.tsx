@@ -7,6 +7,8 @@ import { Award, Calendar, Download, Edit, Clock, Loader2 } from "lucide-react";
 import MahasiswaLayout from "../../../components/MahasiswaLayout";
 import api from "../../../lib/api";
 
+import AktivitasTabs from "../../../components/AktivitasTabs";
+
 export default function SertifikatPage() {
   const router = useRouter();
   const [sertifikats, setSertifikats] = useState<any[]>([]);
@@ -56,12 +58,15 @@ export default function SertifikatPage() {
           <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-indigo-800 rounded-full opacity-50 blur-3xl" />
           <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-amber-500 rounded-full opacity-20 blur-2xl" />
           <div className="max-w-6xl mx-auto px-4 relative z-10">
-            <h1 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">E-Sertifikat Saya</h1>
-            <p className="text-indigo-100/80 mt-2 text-sm">Unduh sertifikat dari event yang telah Anda hadiri.</p>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">Aktivitas Saya</h1>
+            <p className="text-indigo-100/80 mt-2 text-sm">Kelola tiket, transaksi, sertifikat, dan diskusi Anda.</p>
           </div>
         </div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 -mt-16 relative z-20 space-y-8">
+          <div className="bg-white rounded-2xl shadow-sm p-4 mt-8 md:mt-0">
+             <AktivitasTabs />
+          </div>
           {sertifikats.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {sertifikats.map((row: any) => {

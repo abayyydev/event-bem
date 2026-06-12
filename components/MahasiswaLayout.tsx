@@ -7,7 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, Grid3X3, Ticket, Receipt, Award, User,
-  LogOut, Menu, X, ChevronRight, MessageSquare, Bell, ChevronDown, ChevronLeft
+  LogOut, Menu, X, ChevronRight, MessageSquare, Bell, ChevronDown, ChevronLeft, Activity
 } from "lucide-react";
 import React from "react";
 
@@ -16,19 +16,22 @@ interface MahasiswaLayoutProps {
 }
 
 const menuItems = [
-  { section: "MENU UTAMA", items: [
-    { href: "/mahasiswa/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-    { href: "/mahasiswa/katalog", icon: Grid3X3, label: "Katalog Event" },
-  ]},
-  { section: "AKTIVITAS", items: [
-    { href: "/mahasiswa/tiket", icon: Ticket, label: "Tiket Saya" },
-    { href: "/mahasiswa/transaksi", icon: Receipt, label: "Riwayat Transaksi" },
-    { href: "/mahasiswa/sertifikat", icon: Award, label: "E-Sertifikat" },
-    { href: "/mahasiswa/diskusi", icon: MessageSquare, label: "Ruang Diskusi" },
-  ]},
-  { section: "AKUN", items: [
-    { href: "/mahasiswa/profil", icon: User, label: "Profil Saya" },
-  ]},
+  {
+    section: "MENU UTAMA", items: [
+      { href: "/mahasiswa/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+      { href: "/mahasiswa/katalog", icon: Grid3X3, label: "Katalog Event" },
+    ]
+  },
+  {
+    section: "AKTIVITAS", items: [
+      { href: "/mahasiswa/tiket", icon: Activity, label: "Aktivitas" },
+    ]
+  },
+  {
+    section: "AKUN", items: [
+      { href: "/mahasiswa/profil", icon: User, label: "Profil Saya" },
+    ]
+  },
 ];
 
 export default function MahasiswaLayout({ children }: MahasiswaLayoutProps) {
@@ -49,14 +52,20 @@ export default function MahasiswaLayout({ children }: MahasiswaLayoutProps) {
     window.location.href = "/login";
   };
 
-  const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
+  const isActive = (href: string) => {
+    if (href === "/mahasiswa/tiket") {
+      const activityPages = ["/mahasiswa/tiket", "/mahasiswa/transaksi", "/mahasiswa/sertifikat", "/mahasiswa/diskusi"];
+      return activityPages.some(page => pathname === page || pathname.startsWith(page + "/"));
+    }
+    return pathname === href || pathname.startsWith(href + "/");
+  };
 
   // Flat menu items for mobile bottom nav
   const flatMenuItems = menuItems.flatMap(group => group.items);
 
   return (
     <div className="min-h-screen bg-slate-50 flex overflow-hidden">
-      
+
       {/* SIDEBAR DESKTOP */}
       <aside className={`
         hidden md:flex flex-col bg-white border-r border-slate-200 
@@ -68,13 +77,13 @@ export default function MahasiswaLayout({ children }: MahasiswaLayoutProps) {
           <Link href="/mahasiswa/dashboard" className="flex items-center gap-3 overflow-hidden">
             <img src="/logo-bem.png" alt="Logo BEM" className="w-9 h-9 object-contain drop-shadow-md shrink-0" />
             {!isSidebarCollapsed && (
-               <span className="text-lg font-extrabold text-slate-800 tracking-tight whitespace-nowrap">BEM<span className="text-indigo-600">Event</span></span>
+              <span className="text-lg font-extrabold text-slate-800 tracking-tight whitespace-nowrap">BEM<span className="text-indigo-600">El Rahma</span></span>
             )}
           </Link>
         </div>
 
         {/* Collapse Button */}
-        <button 
+        <button
           onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
           className="absolute -right-3 top-24 bg-white border border-gray-200 p-1 rounded-full shadow-sm text-gray-400 hover:text-indigo-600 z-50"
         >
@@ -116,22 +125,22 @@ export default function MahasiswaLayout({ children }: MahasiswaLayoutProps) {
       </aside>
 
       {/* MOBILE BOTTOM NAVIGATION */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex items-center h-16 px-2 overflow-x-auto overflow-y-hidden flex-nowrap shadow-[0_-4px_10px_rgba(0,0,0,0.05)] scrollbar-hide pb-1">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex justify-around items-center h-16 px-2 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] pb-1">
         {flatMenuItems.map((item, index) => {
           const active = isActive(item.href);
           const Icon = item.icon;
           return (
-            <Link 
+            <Link
               key={index}
-              href={item.href} 
-              className={`flex flex-col items-center justify-center w-20 min-w-[5rem] h-full space-y-1 relative shrink-0
+              href={item.href}
+              className={`flex flex-1 flex-col items-center justify-center h-full space-y-1 relative shrink-0
                 ${active ? "text-indigo-600" : "text-gray-400 hover:text-gray-600"}`}
             >
               {active && (
                 <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-1 bg-indigo-600 rounded-b-full"></span>
               )}
               <div className="shrink-0 flex items-center justify-center">
-                 <Icon className="w-5 h-5 shrink-0" />
+                <Icon className="w-5 h-5 shrink-0" />
               </div>
               <span className="text-[10px] font-semibold tracking-wide truncate max-w-full text-center leading-none px-1">
                 {item.label}
@@ -143,7 +152,7 @@ export default function MahasiswaLayout({ children }: MahasiswaLayoutProps) {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
-        
+
         {/* HEADER / TOP NAVBAR */}
         <header className="h-20 px-4 md:px-8 bg-white border-b border-gray-200 flex items-center justify-between shrink-0 sticky top-0 z-30">
           <div className="flex items-center gap-4">
@@ -151,10 +160,10 @@ export default function MahasiswaLayout({ children }: MahasiswaLayoutProps) {
               <h1 className="text-xl font-extrabold text-gray-900 leading-none">Dashboard</h1>
               <p className="text-sm text-gray-500 mt-1">Sistem Informasi Event Kampus</p>
             </div>
-            
+
             <div className="md:hidden flex items-center gap-2">
-               <img src="/logo-bem.png" alt="Logo BEM" className="w-8 h-8 object-contain drop-shadow-md shrink-0" />
-               <span className="text-lg font-extrabold text-slate-800 tracking-tight">BEM<span className="text-indigo-600">Event</span></span>
+              <img src="/logo-bem.png" alt="Logo BEM" className="w-8 h-8 object-contain drop-shadow-md shrink-0" />
+              <span className="text-lg font-extrabold text-slate-800 tracking-tight">BEM<span className="text-indigo-600">El Rahma</span></span>
             </div>
           </div>
 
@@ -163,20 +172,20 @@ export default function MahasiswaLayout({ children }: MahasiswaLayoutProps) {
               <Bell className="w-5 h-5 text-gray-600 group-hover:text-indigo-600" />
               <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
             </button>
-            
+
             {/* User Profile Dropdown */}
             {user && (
               <div className="relative">
-                <button 
+                <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
                   className="flex items-center gap-3 p-1.5 pr-3 bg-white hover:bg-gray-50 border border-gray-200 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-indigo-100"
                 >
                   <div className="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center shrink-0 overflow-hidden border border-slate-200">
                     {user.foto_mahasiswa ? (
-                      <img 
-                        src={user.foto_mahasiswa.startsWith('http') ? user.foto_mahasiswa : `${getBackendBaseUrl()}/uploads/${user.foto_mahasiswa}`} 
-                        alt={user.name} 
-                        className="w-full h-full object-cover" 
+                      <img
+                        src={user.foto_mahasiswa.startsWith('http') ? user.foto_mahasiswa : `${getBackendBaseUrl()}/uploads/${user.foto_mahasiswa}`}
+                        alt={user.name}
+                        className="w-full h-full object-cover"
                       />
                     ) : (
                       <User className="w-4 h-4 text-indigo-600" />
@@ -197,7 +206,7 @@ export default function MahasiswaLayout({ children }: MahasiswaLayoutProps) {
                         <p className="text-sm font-bold text-gray-900 truncate">{user.name}</p>
                         <p className="text-xs text-gray-500 truncate capitalize">{user.role || 'Mahasiswa'}</p>
                       </div>
-                      <button 
+                      <button
                         onClick={handleLogout}
                         className="w-full flex items-center gap-2 px-4 py-3 text-red-600 hover:bg-red-50 transition-colors text-sm font-semibold"
                       >

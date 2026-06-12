@@ -9,6 +9,8 @@ import { Calendar, CheckCircle, Clock, Gift, XCircle, CreditCard, Ticket, Loader
 import MahasiswaLayout from "../../../components/MahasiswaLayout";
 import api from "../../../lib/api";
 
+import AktivitasTabs from "../../../components/AktivitasTabs";
+
 export default function RiwayatTransaksiPage() {
   const router = useRouter();
   const [transaksi, setTransaksi] = useState<any[]>([]);
@@ -71,8 +73,8 @@ export default function RiwayatTransaksiPage() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
               <div>
                 <span className="text-indigo-200 text-xs font-bold uppercase tracking-widest border border-indigo-700/50 px-2 py-1 rounded-md">History</span>
-                <h1 className="text-3xl md:text-4xl font-extrabold text-white leading-tight mt-3">Riwayat Transaksi</h1>
-                <p className="text-indigo-100/90 mt-2 text-sm md:text-base max-w-lg">Pantau status pendaftaran event dan lakukan pembayaran di sini.</p>
+                <h1 className="text-3xl md:text-4xl font-extrabold text-white leading-tight mt-3">Aktivitas Saya</h1>
+                <p className="text-indigo-100/90 mt-2 text-sm md:text-base max-w-lg">Kelola tiket, transaksi, sertifikat, dan diskusi Anda.</p>
               </div>
               <div className="flex gap-3">
                 <div className="bg-white/10 backdrop-blur-md border border-white/10 rounded-xl p-3 px-5 flex flex-col items-center min-w-[90px]">
@@ -95,6 +97,9 @@ export default function RiwayatTransaksiPage() {
         </div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 -mt-16 relative z-20 space-y-8">
+          <div className="bg-white rounded-2xl shadow-sm p-4 mt-8 md:mt-0">
+             <AktivitasTabs />
+          </div>
           <div className="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden min-h-[400px]">
             {/* Desktop Table */}
             <div className="hidden lg:block overflow-x-auto">
