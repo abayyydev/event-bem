@@ -61,11 +61,11 @@ export default function Home() {
             </span>
           </div>
           <div className="flex gap-4 items-center">
-            <Link href="/login" className={`hidden md:block font-semibold transition-colors ${isScrolled ? 'text-slate-600 hover:text-[#ffce31]' : 'text-slate-100 hover:text-[#ffce31]'}`}>
+            <Link href="/login" className={`font-semibold transition-colors ${isScrolled ? 'text-slate-600 hover:text-[#ffce31]' : 'text-slate-100 hover:text-[#ffce31]'}`}>
               Login
             </Link>
-            <Link href="/register" className="px-6 py-2.5 text-sm font-bold bg-[#ffce31] text-[#163a4c] rounded-full hover:bg-[#e6ba29] shadow-lg shadow-[#ffce31]/30 transition-all hover:-translate-y-0.5">
-              Daftar Sekarang
+            <Link href="/register" className="px-4 md:px-6 py-2 md:py-2.5 text-sm font-bold bg-[#ffce31] text-[#163a4c] rounded-full hover:bg-[#e6ba29] shadow-lg shadow-[#ffce31]/30 transition-all hover:-translate-y-0.5">
+              Daftar
             </Link>
           </div>
         </div>
@@ -128,7 +128,7 @@ export default function Home() {
               <div className="absolute -inset-4 bg-[#ffce31] rounded-2xl blur-lg opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/visi-misi.png"
+                src="/sunat_bareng.jpeg"
                 alt="Kegiatan BEM"
                 className="rounded-2xl shadow-xl w-full object-cover relative z-10 h-full min-h-[400px] border border-white/50"
               />
@@ -340,22 +340,7 @@ export default function Home() {
 
 
       {/* Call to Action */}
-      <section className="py-24 bg-[#ffce31] relative overflow-hidden">
-        {/* We use inline SVG for pattern to avoid 404 */}
-        <div className="absolute inset-0 opacity-10 mix-blend-overlay" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-black/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
 
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-[#163a4c] mb-6">Siap Berkembang Bersama Kami?</h2>
-          <p className="text-xl text-[#163a4c]/80 mb-10 max-w-2xl mx-auto">
-            Bergabunglah dengan BEM El Rahma dan temukan kegiatan yang tepat untuk meningkatkan kreativitas, inovasi, dan relasimu.
-          </p>
-          <Link href="/register" className="inline-flex items-center justify-center px-10 py-5 bg-[#163a4c] text-white font-extrabold rounded-full shadow-xl shadow-[#163a4c]/20 hover:bg-[#102a38] transition-all hover:scale-105 text-lg">
-            Daftar Kegiatan Sekarang
-          </Link>
-        </div>
-      </section>
 
       {/* Detailed Footer */}
       <footer className="bg-[#163a4c] text-slate-300 py-16 border-t border-white/10 relative overflow-hidden">
@@ -365,7 +350,7 @@ export default function Home() {
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-2 mb-6">
                 <img src="/logo-bem.png" alt="Logo BEM El Rahma" className="w-10 h-10 object-contain drop-shadow-md" />
-                <span className="text-2xl font-bold text-[#ffce31] tracking-tight">BEM <span className="text-[#ffce31]">El Rahma</span></span>
+                <span className="text-2xl font-bold text-white tracking-tight">BEM El Rahma</span>
               </div>
               <p className="text-slate-400 leading-relaxed max-w-sm mb-6">
                 Wadah pengembangan diri, kreativitas, dan kepemimpinan mahasiswa untuk mencapai visi bersama menuju kampus yang lebih baik.
