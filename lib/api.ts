@@ -4,9 +4,6 @@ import { getDynamicApiUrl } from "./axios";
 // Membuat instance axios global yang bisa di-reuse di seluruh aplikasi
 const api = axios.create({
   baseURL: getDynamicApiUrl(),
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 // Interceptor (Opsional tapi sangat berguna): 
