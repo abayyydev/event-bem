@@ -291,7 +291,7 @@ export default function KelolaTimPage() {
                             </h2>
                         </div>
 
-                        <div className="overflow-x-auto">
+                        <div className="hidden md:block overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
                                     <tr className="bg-gray-50/50 text-gray-500 text-xs font-bold uppercase tracking-wider border-b border-gray-100">
@@ -349,6 +349,42 @@ export default function KelolaTimPage() {
                                     )}
                                 </tbody>
                             </table>
+                        </div>
+
+                        {/* Mobile Cards */}
+                        <div className="md:hidden p-4 space-y-4">
+                            {tim.length > 0 ? (
+                                tim.map((anggota) => (
+                                    <div key={anggota.id} className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm flex flex-col gap-3 relative">
+                                        <button onClick={() => handleDelete(anggota.id, anggota.nama_lengkap)}
+                                            className="absolute top-4 right-4 w-8 h-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center border border-red-100 transition-colors"
+                                            title="Hapus">
+                                            <Trash2 className="w-4 h-4" />
+                                        </button>
+                                        <div className="flex items-center gap-3 pr-10">
+                                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-100 to-indigo-200 text-indigo-700 flex items-center justify-center font-bold shadow-sm shrink-0">
+                                                {anggota.nama_lengkap.charAt(0).toUpperCase()}
+                                            </div>
+                                            <div>
+                                                <p className="font-bold text-gray-800 text-sm">{anggota.nama_lengkap}</p>
+                                                <p className="text-[10px] text-gray-400">Bergabung: {new Date(anggota.created_at).toLocaleDateString('id-ID')}</p>
+                                            </div>
+                                        </div>
+                                        <div className="bg-gray-50 rounded-lg p-3 space-y-2 mt-1">
+                                            <div className="flex items-center gap-2 text-xs text-gray-600">
+                                                <Mail className="w-3.5 h-3.5 text-gray-400 shrink-0" /> <span className="truncate">{anggota.email}</span>
+                                            </div>
+                                            <div className="flex items-center gap-2 text-xs text-gray-600">
+                                                <Phone className="w-3.5 h-3.5 text-gray-400 shrink-0" /> <span>{anggota.no_whatsapp || '-'}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="text-center py-10 text-gray-500 font-medium text-sm">
+                                    Belum ada anggota tim. Silakan tambahkan dari form di atas.
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

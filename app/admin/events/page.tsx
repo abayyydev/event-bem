@@ -316,7 +316,7 @@ export default function ManageEventsPage() {
             </div>
           ) : (
             <div className="bg-white rounded-3xl shadow-md border border-slate-100 overflow-hidden">
-              <div className="overflow-x-auto">
+              <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="bg-slate-50 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-100">
@@ -471,6 +471,89 @@ export default function ManageEventsPage() {
                     })}
                   </tbody>
                 </table>
+              </div>
+
+              {/* Mobile Cards */}
+              <div className="md:hidden p-4 space-y-4">
+                {displayEvents.map((event) => {
+                  const isFree = event.tipe_event === 'gratis' || event.harga <= 0;
+                  return (
+                    <div key={event.id} className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex flex-col gap-3 relative">
+                      <div className="flex gap-3">
+                        <div className="relative h-16 w-24 flex-shrink-0 rounded-lg overflow-hidden border border-slate-200">
+                          {event.poster ? (
+                            <img src={`${getBackendBaseUrl()}/uploads/${event.poster}`} alt="" className="h-full w-full object-cover" />
+                          ) : (
+                            <div className="h-full w-full bg-slate-100 flex items-center justify-center">
+                              <Calendar className="w-6 h-6 text-slate-400" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0 flex flex-col justify-between">
+                          <div>
+                            <h4 className="font-bold text-slate-800 text-sm line-clamp-2 leading-tight mb-1">{event.judul}</h4>
+                            <div className="flex items-center gap-1 text-[10px] text-slate-500 mb-1">
+                              <Building className="w-3 h-3" />
+                              <span className="truncate">{event.ukm_penyelenggara || event.nama_penyelenggara || 'BEM / UKM Kampus'}</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <span className={`inline-flex items-center px-1.5 py-0.5 rounded-md text-[9px] font-bold ${event.visibilitas === 'public' ? 'bg-blue-50 text-blue-700' : 'bg-slate-100 text-slate-600'}`}>
+                              {event.visibilitas === 'public' ? 'Public' : 'Internal'}
+                            </span>
+                            <span className={`inline-flex items-center px-1.5 py-0.5 rounded-md text-[9px] font-bold ${isFree ? 'bg-emerald-50 text-emerald-700' : 'bg-indigo-50 text-indigo-700'}`}>
+                              {isFree ? 'Gratis' : `Rp ${Number(event.harga).toLocaleString("id-ID")}`}
+                            </span>
+                            <span className={`inline-flex items-center px-1.5 py-0.5 rounded-md text-[9px] font-bold ${event.status === 'approved' ? 'bg-emerald-50 text-emerald-700' : event.status === 'rejected' ? 'bg-red-50 text-red-700' : 'bg-amber-50 text-amber-700'}`}>
+                              {event.status === 'approved' ? 'Disetujui' : event.status === 'rejected' ? 'Ditolak' : 'Draft'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-slate-50 rounded-lg p-2.5 flex flex-col gap-1.5 text-xs">
+                        <div className="flex items-center gap-1.5 text-slate-600">
+                          <Calendar className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                          <span>{formatTanggal(event.tanggal_waktu)} ({formatJam(event.tanggal_waktu)})</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-slate-600">
+                          <MapPin className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
+                          <span className="truncate">{event.lokasi}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between mt-1 pt-2 border-t border-slate-100">
+                        {event.status === 'draft' ? (
+                          <div className="flex items-center gap-2">
+                            <button
+                              disabled={actionLoadingId === event.id}
+                              onClick={() => handleApprove(event.id)}
+                              className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold shadow-sm transition-all flex items-center gap-1 disabled:opacity-50"
+                            >
+                              {actionLoadingId === event.id ? <Loader2 className="w-3 h-3 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
+                              Setuju
+                            </button>
+                            <button
+                              disabled={actionLoadingId === event.id}
+                              onClick={() => handleReject(event.id)}
+                              className="px-3 py-1.5 bg-red-50 text-red-600 hover:bg-red-100 border border-red-100 rounded-lg text-xs font-bold transition-all disabled:opacity-50"
+                            >
+                              Tolak
+                            </button>
+                          </div>
+                        ) : (
+                          <span className="text-[10px] text-slate-400 font-medium italic">Telah Ditinjau</span>
+                        )}
+                        <button
+                          onClick={() => handleDelete(event.id)}
+                          className="p-1.5 bg-slate-50 text-red-600 hover:bg-red-50 hover:border-red-100 rounded-lg transition-colors border border-slate-200"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}

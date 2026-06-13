@@ -331,7 +331,7 @@ export default function KeuanganEventPage() {
             </div>
 
             {/* Table */}
-            <div className="overflow-x-auto">
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-slate-50 text-slate-400 text-[10px] font-black uppercase tracking-wider border-b border-slate-100">
@@ -395,6 +395,62 @@ export default function KeuanganEventPage() {
                   )}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="md:hidden p-4 space-y-4 bg-slate-50">
+              {filteredRecords.length > 0 ? (
+                filteredRecords.map((rec) => (
+                  <div key={rec.id} className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm relative overflow-hidden flex flex-col gap-3">
+                    <div className={`absolute top-0 left-0 w-1.5 h-full ${rec.status === 'lunas' ? 'bg-emerald-500' : 'bg-amber-400'}`} />
+                    <div className="pl-2">
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <div className="font-bold text-slate-800 text-sm">{rec.nama_peserta}</div>
+                          <div className="text-[10px] text-slate-400">NIM: {rec.nim}</div>
+                        </div>
+                        {rec.tipe === "pendaftaran" ? (
+                          <span className="px-2 py-1 bg-blue-50 text-blue-600 rounded text-[9px] font-bold uppercase tracking-wide">
+                            Registrasi
+                          </span>
+                        ) : (
+                          <span className="px-2 py-1 bg-orange-50 text-orange-600 rounded text-[9px] font-bold uppercase tracking-wide">
+                            Denda
+                          </span>
+                        )}
+                      </div>
+                      
+                      <div className="bg-slate-50 p-2 rounded-lg mb-3">
+                        <div className="text-xs text-slate-600 font-medium line-clamp-2">{rec.keterangan}</div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2 text-xs items-end">
+                        <div>
+                          <div className="text-[9px] text-slate-400 font-bold uppercase mb-0.5">Nominal</div>
+                          <div className="font-black text-slate-800">{formatRupiah(rec.nominal)}</div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-[9px] text-slate-400 font-bold uppercase mb-0.5">Status & Waktu</div>
+                          {rec.status === "lunas" ? (
+                            <div className="font-bold text-emerald-600 mb-0.5">LUNAS</div>
+                          ) : (
+                            <div className="font-bold text-amber-500 mb-0.5">BELUM LUNAS</div>
+                          )}
+                          <div className="text-[9px] text-slate-400">
+                            {new Date(rec.tanggal).toLocaleDateString("id-ID", {
+                              day: "numeric", month: "short", year: "numeric",
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-10 text-slate-400 font-bold text-xs">
+                  Tidak ada data pemasukan yang cocok.
+                </div>
+              )}
             </div>
           </div>
         </div>

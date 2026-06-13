@@ -315,7 +315,7 @@ export default function ManageMahasiswaPage() {
 
           {/* Table Container */}
           <div className="bg-white rounded-3xl shadow-md border border-slate-100 overflow-hidden">
-            <div className="overflow-x-auto">
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-slate-50 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-100">
@@ -448,6 +448,102 @@ export default function ManageMahasiswaPage() {
                   )}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="md:hidden p-4 space-y-4">
+              {loadingData ? (
+                <div className="py-20 text-center text-slate-500">
+                  <div className="flex flex-col items-center gap-3">
+                    <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+                    <span className="font-medium text-sm">Memuat data mahasiswa...</span>
+                  </div>
+                </div>
+              ) : filteredMahasiswas.length === 0 ? (
+                <div className="py-16 text-center text-slate-500 font-medium text-sm">
+                  Tidak ada data mahasiswa ditemukan.
+                </div>
+              ) : (
+                filteredMahasiswas.map((mhs) => (
+                  <div key={mhs.id} className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm relative overflow-hidden flex flex-col gap-3">
+                    <div className={`absolute top-0 left-0 w-1.5 h-full ${mhs.status === 'active' ? 'bg-emerald-500' : 'bg-red-500'}`} />
+                    <div className="flex justify-between items-start pl-2">
+                      <div className="flex items-center gap-3">
+                        <div className="h-10 w-10 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center font-bold text-indigo-700 overflow-hidden shrink-0 text-sm uppercase">
+                          {mhs.foto_mahasiswa ? (
+                            <img src={mhs.foto_mahasiswa.startsWith('http') ? mhs.foto_mahasiswa : `${getBackendBaseUrl()}/uploads/${mhs.foto_mahasiswa}`} alt="" className="h-full w-full object-cover" />
+                          ) : (
+                            mhs.nama_lengkap.slice(0, 2)
+                          )}
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-slate-800 text-sm">{mhs.nama_lengkap}</h4>
+                          <span className="text-[10px] text-slate-400 capitalize">{mhs.jenis_kelamin || "Jenis Kelamin -"}</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end gap-1">
+                        {mhs.google_id ? (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-red-50 text-red-600 text-[9px] font-bold border border-red-100 uppercase tracking-wider">
+                            Google
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-600 text-[9px] font-bold border border-indigo-100 uppercase tracking-wider">
+                            Lokal
+                          </span>
+                        )}
+                        <button 
+                          onClick={() => handleToggleStatus(mhs.id, mhs.status)}
+                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-bold transition-all border uppercase tracking-wider ${
+                            mhs.status === "active" 
+                              ? "bg-emerald-50 text-emerald-700 border-emerald-100" 
+                              : "bg-red-50 text-red-700 border-red-100"
+                          }`}
+                        >
+                          {mhs.status === "active" ? (
+                            <>Aktif</>
+                          ) : (
+                            <>Nonaktif</>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="bg-slate-50 rounded-lg p-3 space-y-2 ml-2">
+                      <div className="flex items-center gap-2 text-xs">
+                        <span className="font-bold text-slate-700 bg-white border border-slate-200 px-2 py-0.5 rounded">
+                          {mhs.nim || "NIM - (Belum Diisi)"}
+                        </span>
+                        <span className="text-slate-500 flex items-center gap-1 truncate">
+                          <BookOpen className="w-3.5 h-3.5 text-indigo-500 shrink-0" /> {mhs.prodi || "-"}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs">
+                        <Mail className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                        <span className="text-slate-600 truncate">{mhs.email}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs">
+                        <Phone className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                        <span className="text-slate-600">{mhs.no_hp_mahasiswa || "-"}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end gap-2 ml-2 mt-1">
+                      <button 
+                        onClick={() => handleOpenEditModal(mhs)}
+                        className="px-3 py-1.5 bg-slate-50 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-colors border border-slate-200 text-xs font-bold flex items-center gap-1"
+                      >
+                        <Edit3 className="w-3.5 h-3.5" /> Edit
+                      </button>
+                      <button 
+                        onClick={() => handleDelete(mhs.id)}
+                        className="px-3 py-1.5 bg-red-50 text-red-600 hover:bg-red-100 hover:border-red-200 rounded-lg transition-colors border border-red-100 text-xs font-bold flex items-center gap-1"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" /> Hapus
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

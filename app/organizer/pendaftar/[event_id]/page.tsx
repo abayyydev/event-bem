@@ -209,7 +209,7 @@ export default function DetailPendaftarPage() {
 
             {/* List */}
             <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
-                <div className="overflow-x-auto">
+                <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider border-b border-gray-100">
@@ -282,7 +282,7 @@ export default function DetailPendaftarPage() {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-16 text-center">
+                                    <td colSpan={6} className="px-6 py-16 text-center">
                                         <div className="flex flex-col items-center justify-center">
                                             <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-3">
                                                 <Users className="w-8 h-8 text-gray-400" />
@@ -295,6 +295,75 @@ export default function DetailPendaftarPage() {
                             )}
                         </tbody>
                     </table>
+                </div>
+
+                {/* Mobile Cards */}
+                <div className="md:hidden p-4 space-y-4">
+                    {filteredPendaftar.length > 0 ? (
+                        filteredPendaftar.map((p) => (
+                            <div key={p.id} className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm relative flex flex-col gap-3 overflow-hidden">
+                                <div className={`absolute top-0 left-0 w-1.5 h-full ${p.status_kehadiran === 'hadir' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                                <button onClick={() => handleDelete(p.id)}
+                                    className="absolute top-4 right-4 w-8 h-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center border border-red-100 transition-colors"
+                                    title="Hapus">
+                                    <Trash2 className="w-4 h-4" />
+                                </button>
+                                <div className="flex items-center gap-3 pr-10 pl-2">
+                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-100 to-indigo-200 text-indigo-700 flex items-center justify-center font-bold text-sm shadow-sm shrink-0">
+                                        {p.nama_peserta.charAt(0).toUpperCase()}
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-gray-800 text-sm leading-tight">{p.nama_peserta}</p>
+                                        <p className="text-[10px] text-gray-400">{p.prodi || p.nim || "Umum"}</p>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-2 text-xs bg-gray-50 p-3 rounded-lg ml-2">
+                                    <div>
+                                        <span className="text-[10px] text-gray-400 font-bold uppercase block mb-0.5">Email</span>
+                                        <span className="text-gray-700 truncate block">{p.email_peserta}</span>
+                                    </div>
+                                    <div>
+                                        <span className="text-[10px] text-gray-400 font-bold uppercase block mb-0.5">No HP</span>
+                                        <span className="text-gray-700 block">{p.telepon_peserta || '-'}</span>
+                                    </div>
+                                </div>
+                                <div className="flex items-center justify-between pl-2">
+                                    <div>
+                                        <span className="font-mono text-[10px] bg-gray-100 px-2 py-1 rounded text-gray-500 font-bold tracking-widest border border-gray-200">
+                                            #{p.kode_unik}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        {p.status_kehadiran === 'hadir' ? (
+                                            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-100">
+                                                <CheckCircle className="w-3 h-3" /> Hadir
+                                            </span>
+                                        ) : (
+                                            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold bg-amber-50 text-amber-600 border border-amber-100">
+                                                <XCircle className="w-3 h-3" /> Belum
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                                {eventData?.sertifikat_custom_type === 'per_peserta' && (
+                                    <div className="pl-2 mt-1">
+                                        <label className="text-[10px] text-gray-400 font-bold uppercase block mb-1">Predikat</label>
+                                        <input 
+                                            type="text" 
+                                            defaultValue={p.sertifikat_predikat || ""}
+                                            onBlur={(e) => handleUpdatePredikat(p.id, e.target.value)}
+                                            placeholder="Isi Predikat..."
+                                            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-indigo-500 outline-none bg-white transition-colors"
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        ))
+                    ) : (
+                        <div className="text-center py-10 text-gray-500 font-medium text-sm">
+                            Tidak ada pendaftar yang cocok.
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

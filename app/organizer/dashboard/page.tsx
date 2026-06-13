@@ -210,7 +210,7 @@ export default function OrganizerDashboard() {
                 Lihat Semua <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            <div className="overflow-x-auto">
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="border-b text-xs font-bold text-slate-400 bg-slate-50 uppercase tracking-wider">
@@ -252,6 +252,43 @@ export default function OrganizerDashboard() {
                   )}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="md:hidden p-4 space-y-4">
+              {recentEvents.length > 0 ? (
+                recentEvents.map((ev: any) => (
+                  <div key={ev.id} className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm relative overflow-hidden flex flex-col gap-3">
+                    <div className={`absolute top-0 left-0 w-1.5 h-full ${ev.status === "approved" ? "bg-emerald-500" : "bg-amber-400"}`} />
+                    <div className="pl-2">
+                      <div className="flex justify-between items-start mb-2 gap-2">
+                        <div className="font-bold text-slate-800 text-sm leading-tight">{ev.judul}</div>
+                        <span className={`text-[9px] font-extrabold px-2 py-1 rounded-md tracking-wider shrink-0 ${ev.status === "approved" ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"}`}>
+                          {ev.status === "approved" ? "PUBLISHED" : "DRAFT"}
+                        </span>
+                      </div>
+                      <div className="flex items-center text-xs text-slate-600 font-medium mb-3">
+                        <Calendar className="w-3.5 h-3.5 mr-1.5 text-indigo-400" />
+                        {new Date(ev.tanggal_waktu).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}
+                      </div>
+                      <div className="flex justify-between items-center bg-slate-50 p-2.5 rounded-lg">
+                        <div className="flex items-center gap-1.5 text-xs">
+                          <Users className="w-4 h-4 text-slate-400" />
+                          <span className="font-bold text-slate-700">{ev.total_registrants}</span>
+                          <span className="text-[10px] text-slate-500 uppercase">Peserta</span>
+                        </div>
+                        <Link href={`/organizer/pendaftar/${ev.id}`} className="text-indigo-600 hover:text-indigo-800 text-xs font-bold px-3 py-1.5 bg-indigo-50 rounded-md">
+                          Kelola
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-8 text-slate-400 font-bold text-xs">
+                  Belum ada event yang Anda buat.
+                </div>
+              )}
             </div>
           </div>
         </div>

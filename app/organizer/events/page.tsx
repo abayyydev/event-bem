@@ -179,7 +179,7 @@ export default function KelolaEventPage() {
 
           {/* Container Data */}
           <div className="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-visible">
-            <div className="max-md:overflow-x-auto min-h-[400px] pb-10">
+            <div className="hidden md:block max-md:overflow-x-auto min-h-[400px] pb-10">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-slate-50 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-100">
@@ -322,6 +322,96 @@ export default function KelolaEventPage() {
                   )}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="md:hidden p-4 space-y-4">
+              {!loading && events.length === 0 ? (
+                <div className="py-12 text-center text-gray-500 font-medium text-sm">
+                  Tidak ada event ditemukan.
+                </div>
+              ) : (
+                events.map((event) => (
+                  <div key={event.id} className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex flex-col gap-4 relative">
+                    <div className="flex gap-4">
+                      <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg shadow-sm border border-gray-200">
+                        {event.poster ? (
+                          <img src={`${getBackendBaseUrl()}/uploads/${event.poster}`} alt="poster" className="h-full w-full object-cover" />
+                        ) : (
+                          <div className="h-full w-full bg-gray-100 flex items-center justify-center text-gray-400">
+                            <ImageIcon className="w-6 h-6" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-bold text-gray-800 text-sm mb-1 leading-tight">{event.judul}</h3>
+                        <div className="flex flex-wrap gap-1 mb-2">
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider ${event.visibilitas === 'public' ? 'bg-blue-50 text-blue-700' : 'bg-gray-100 text-gray-600'}`}>
+                            {event.visibilitas === 'public' ? 'Public' : 'Internal'}
+                          </span>
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider ${event.tipe_event === 'berbayar' ? 'bg-indigo-50 text-indigo-700' : 'bg-emerald-50 text-emerald-700'}`}>
+                            {event.tipe_event === 'berbayar' ? 'Berbayar' : 'Gratis'}
+                          </span>
+                        </div>
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider ${event.status === 'approved' ? 'bg-emerald-50 text-emerald-700' : event.status === 'rejected' ? 'bg-red-50 text-red-700' : 'bg-amber-50 text-amber-700'}`}>
+                          {event.status === 'approved' ? 'Disetujui' : event.status === 'rejected' ? 'Ditolak' : 'Pending'}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="bg-slate-50 rounded-lg p-3 space-y-2">
+                      <div className="flex items-center text-xs text-gray-600">
+                        <Calendar className="w-3.5 h-3.5 mr-2 text-blue-500 shrink-0" />
+                        <span>{formatTanggal(event.tanggal_waktu)} • {formatJam(event.tanggal_waktu)}</span>
+                      </div>
+                      <div className="flex items-center text-xs text-gray-600">
+                        <MapPin className="w-3.5 h-3.5 mr-2 text-indigo-500 shrink-0" />
+                        <span className="truncate">{event.lokasi}</span>
+                      </div>
+                    </div>
+                    <div className="relative" ref={openDropdownId === event.id ? dropdownRef : null}>
+                      <button
+                        onClick={() => setOpenDropdownId(openDropdownId === event.id ? null : event.id)}
+                        className="w-full flex justify-center items-center rounded-lg border border-gray-200 px-4 py-2 bg-white text-xs font-bold text-gray-700 hover:bg-slate-50 transition-colors"
+                      >
+                        Menu Kontrol <ChevronDown className="w-4 h-4 ml-2" />
+                      </button>
+                      {openDropdownId === event.id && (
+                        <div className="absolute right-0 bottom-full mb-2 w-full sm:w-56 rounded-xl shadow-xl bg-white ring-1 ring-black ring-opacity-5 z-50">
+                          <div className="p-1">
+                            <Link href={`/organizer/events/edit/${btoa(event.id.toString())}`} className="flex items-center px-3 py-2 text-xs text-gray-700 rounded-lg hover:bg-indigo-50 hover:text-indigo-700">
+                              <Edit3 className="w-3.5 h-3.5 mr-2" /> Edit Event
+                            </Link>
+                            <Link href={`/organizer/events/form/${btoa(event.id.toString())}`} className="flex items-center px-3 py-2 text-xs text-gray-700 rounded-lg hover:bg-indigo-50 hover:text-indigo-700">
+                              <FileText className="w-3.5 h-3.5 mr-2" /> Atur Form
+                            </Link>
+                            <Link href={`/organizer/events/kuesioner/${btoa(event.id.toString())}`} className="flex items-center px-3 py-2 text-xs text-gray-700 rounded-lg hover:bg-indigo-50 hover:text-indigo-700">
+                              <HelpCircle className="w-3.5 h-3.5 mr-2" /> Kuesioner
+                            </Link>
+                            <Link href={`/organizer/events/hasil-kuesioner/${btoa(event.id.toString())}`} className="flex items-center px-3 py-2 text-xs text-gray-700 rounded-lg hover:bg-indigo-50 hover:text-indigo-700">
+                              <BarChart2 className="w-3.5 h-3.5 mr-2" /> Hasil Kuesioner
+                            </Link>
+                            <div className="border-t border-gray-100 my-1"></div>
+                            <Link href={`/organizer/events/adson/${btoa(event.id.toString())}`} className="flex items-center px-3 py-2 text-xs text-gray-700 rounded-lg hover:bg-indigo-50 hover:text-indigo-700">
+                              <span className="w-3.5 h-3.5 mr-2 flex items-center justify-center text-sm">🎁</span> Kelola Adson
+                            </Link>
+                            <div className="border-t border-gray-100 my-1"></div>
+                            <Link href={`/organizer/events/sertifikat/${btoa(event.id.toString())}`} className="flex items-center px-3 py-2 text-xs text-gray-700 rounded-lg hover:bg-indigo-50 hover:text-indigo-700">
+                              <Download className="w-3.5 h-3.5 mr-2" /> Sertifikat
+                            </Link>
+                            <div className="border-t border-gray-100 my-1"></div>
+                            <button
+                              onClick={() => { setOpenDropdownId(null); handleDelete(event.id); }}
+                              className="w-full text-left flex items-center px-3 py-2 text-xs text-red-600 rounded-lg hover:bg-red-50 hover:text-red-700"
+                            >
+                              <Trash2 className="w-3.5 h-3.5 mr-2" /> Hapus Event
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
 
             {/* Pagination Footer */}
