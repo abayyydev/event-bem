@@ -20,12 +20,12 @@ jobs:
         with:
           node-version: 22
 
-      # 3. Setup Java 17 untuk Android
+      # 3. Setup Java 21 untuk Android
       - name: Setup Java JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
 
       # 4. Install NPM dependensi
       - name: Install Dependencies
