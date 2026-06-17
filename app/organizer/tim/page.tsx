@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Calendar, Users, PlusCircle, Search, Trash2, ShieldCheck, Mail, Phone, Loader2, MessageSquare } from "lucide-react";
+import { Calendar, Users, PlusCircle, Search, Trash2, ShieldCheck, Phone, Loader2, MessageSquare, Briefcase } from "lucide-react";
 import api from "../../../lib/api";
 import DashboardLayout from "../../../components/DashboardLayout";
 import Swal from "sweetalert2";
@@ -13,6 +13,7 @@ interface TimMember {
   email: string;
   no_whatsapp: string;
   role: string;
+  event_name: string;
   created_at: string;
 }
 
@@ -24,10 +25,16 @@ interface Mahasiswa {
   no_hp_mahasiswa: string;
 }
 
+interface EventOption {
+  id: number;
+  judul: string;
+}
+
 export default function KelolaTimPage() {
   const router = useRouter();
   const [user, setUser] = useState<{ name: string; email: string; role: string } | null>(null);
   const [tim, setTim] = useState<TimMember[]>([]);
+  const [events, setEvents] = useState<EventOption[]>([]);
   const [loading, setLoading] = useState(true);
   
   // Search Mahasiswa states
@@ -37,7 +44,8 @@ export default function KelolaTimPage() {
   
   // Add Member state
   const [selectedMahasiswa, setSelectedMahasiswa] = useState<Mahasiswa | null>(null);
-  const [password, setPassword] = useState("");
+  const [selectedEventId, setSelectedEventId] = useState<string>("");
+  const [role, setRole] = useState("");
   const [saving, setSaving] = useState(false);
 
   const navLinks = [
@@ -59,21 +67,25 @@ export default function KelolaTimPage() {
     }
   }, [router]);
 
-  const fetchTim = async () => {
+  const fetchData = async () => {
     try {
       setLoading(true);
-      const res = await api.get('/tim');
-      setTim(res.data);
+      const [resTim, resEvents] = await Promise.all([
+        api.get('/tim'),
+        api.get('/tim/events')
+      ]);
+      setTim(resTim.data);
+      setEvents(resEvents.data);
     } catch (err) {
       console.error(err);
-      Swal.fire('Error', 'Gagal memuat data tim', 'error');
+      Swal.fire('Error', 'Gagal memuat data', 'error');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchTim();
+    fetchData();
   }, []);
 
   const handleLogout = () => {
@@ -112,8 +124,8 @@ export default function KelolaTimPage() {
     e.preventDefault();
     if (!selectedMahasiswa) return;
 
-    if (password.length < 8) {
-      Swal.fire('Error', 'Password minimal 8 karakter', 'error');
+    if (!selectedEventId || !role) {
+      Swal.fire('Error', 'Silakan pilih event dan isi role panitia', 'error');
       return;
     }
 
@@ -121,20 +133,22 @@ export default function KelolaTimPage() {
     try {
       await api.post('/tim', {
         mahasiswa_id: selectedMahasiswa.id,
-        password: password
+        workshop_id: selectedEventId,
+        role: role
       });
       
       Swal.fire({
         icon: 'success',
         title: 'Berhasil!',
-        text: 'Anggota tim berhasil ditambahkan.',
+        text: 'Anggota tim berhasil ditambahkan ke event.',
         timer: 2000,
         showConfirmButton: false
       });
       
       setSelectedMahasiswa(null);
-      setPassword("");
-      fetchTim();
+      setSelectedEventId("");
+      setRole("");
+      fetchData();
     } catch (err: any) {
       Swal.fire('Gagal!', err.response?.data?.message || 'Terjadi kesalahan', 'error');
     } finally {
@@ -145,7 +159,7 @@ export default function KelolaTimPage() {
   const handleDelete = async (id: number, nama: string) => {
     const result = await Swal.fire({
       title: 'Hapus Anggota?',
-      html: `Hapus <strong>${nama}</strong> dari tim?`,
+      html: `Hapus <strong>${nama}</strong> dari kepanitiaan event ini?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#ef4444',
@@ -158,7 +172,7 @@ export default function KelolaTimPage() {
       try {
         await api.delete(`/tim/${id}`);
         Swal.fire('Terhapus!', 'Anggota tim berhasil dihapus.', 'success');
-        fetchTim();
+        fetchData();
       } catch (err: any) {
         Swal.fire('Gagal!', err.response?.data?.message || 'Gagal menghapus data', 'error');
       }
@@ -191,17 +205,17 @@ export default function KelolaTimPage() {
                         <span className="text-xs font-semibold tracking-wide uppercase text-indigo-100">Manajemen User</span>
                     </div>
                     <h1 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-tight mb-3">
-                        Kelola <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">Tim</span>
+                        Kelola <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">Tim Panitia</span>
                     </h1>
                     <p className="text-indigo-100/80 mt-2 text-sm md:text-base max-w-xl leading-relaxed">
-                        Pilih data mahasiswa untuk ditambahkan sebagai panitia (tim penyelenggara) ke dashboard ini.
+                        Pilih data mahasiswa untuk ditambahkan sebagai panitia di event tertentu. Mereka dapat login via akun mahasiswa untuk mengelola pendaftar.
                     </p>
                 </div>
                 
                 <div className="flex gap-3 justify-start md:justify-end shrink-0">
                     <div className="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-4 flex flex-col items-center min-w-[120px]">
                         <span className="text-3xl font-bold text-white">{tim.length}</span>
-                        <span className="text-[10px] text-indigo-200 uppercase font-bold tracking-wider mt-1">Total Anggota</span>
+                        <span className="text-[10px] text-indigo-200 uppercase font-bold tracking-wider mt-1">Total Panitia</span>
                     </div>
                 </div>
             </div>
@@ -220,8 +234,8 @@ export default function KelolaTimPage() {
                                 <PlusCircle className="w-5 h-5" />
                             </div>
                             <div>
-                                <h2 className="text-lg font-bold text-gray-800">Tambah Anggota</h2>
-                                <p className="text-xs text-gray-500">Cari data dari mahasiswa</p>
+                                <h2 className="text-lg font-bold text-gray-800">Tambah Panitia</h2>
+                                <p className="text-xs text-gray-500">Pilih mahasiswa & event</p>
                             </div>
                         </div>
 
@@ -235,7 +249,7 @@ export default function KelolaTimPage() {
                                         </span>
                                         <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
                                             className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all outline-none text-sm"
-                                            placeholder="Ketik NIM, Nama, atau Email (min 3 huruf)..." />
+                                            placeholder="Ketik NIM, Nama, atau Email..." />
                                     </div>
                                     {searching && <p className="text-xs text-gray-400 mt-2 ml-1">Mencari...</p>}
                                 </div>
@@ -258,16 +272,27 @@ export default function KelolaTimPage() {
                                     <button type="button" onClick={() => setSelectedMahasiswa(null)} className="absolute top-2 right-2 text-indigo-400 hover:text-indigo-650">
                                         <Trash2 className="w-4 h-4" />
                                     </button>
-                                    <p className="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-1">Terpilih:</p>
+                                    <p className="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-1">Mahasiswa Terpilih:</p>
                                     <p className="font-bold text-gray-800">{selectedMahasiswa.nama_lengkap}</p>
                                     <p className="text-xs text-gray-600">{selectedMahasiswa.email}</p>
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1">Password Default</label>
-                                    <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8}
+                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1">Pilih Event</label>
+                                    <select value={selectedEventId} onChange={(e) => setSelectedEventId(e.target.value)} required
+                                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all outline-none text-sm appearance-none">
+                                        <option value="">-- Pilih Event --</option>
+                                        {events.map(ev => (
+                                            <option key={ev.id} value={ev.id}>{ev.judul}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1">Posisi / Role Kepanitiaan</label>
+                                    <input type="text" value={role} onChange={(e) => setRole(e.target.value)} required
                                         className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all outline-none text-sm"
-                                        placeholder="Min 8 karakter untuk login" />
+                                        placeholder="Contoh: Ketua Pelaksana, Humas, dll" />
                                 </div>
 
                                 <button type="submit" disabled={saving}
@@ -285,9 +310,9 @@ export default function KelolaTimPage() {
                         <div className="bg-gradient-to-r from-slate-900 to-slate-950 px-6 py-5 border-b border-slate-800 flex justify-between items-center">
                             <h2 className="text-lg font-bold text-white flex items-center gap-3">
                                 <span className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-indigo-300">
-                                    <Users className="w-4 h-4" />
+                                    <Briefcase className="w-4 h-4" />
                                 </span>
-                                Daftar Anggota Tim
+                                Daftar Kepanitiaan Event
                             </h2>
                         </div>
 
@@ -295,8 +320,8 @@ export default function KelolaTimPage() {
                             <table className="w-full text-left border-collapse">
                                 <thead>
                                     <tr className="bg-gray-50/50 text-gray-500 text-xs font-bold uppercase tracking-wider border-b border-gray-100">
-                                        <th className="px-6 py-4">Anggota</th>
-                                        <th className="px-6 py-4">Kontak</th>
+                                        <th className="px-6 py-4">Nama Panitia</th>
+                                        <th className="px-6 py-4">Peran & Event</th>
                                         <th className="px-6 py-4 text-center">Aksi</th>
                                     </tr>
                                 </thead>
@@ -313,19 +338,20 @@ export default function KelolaTimPage() {
                                                             <p className="font-bold text-gray-800 text-sm group-hover:text-indigo-700 transition-colors">
                                                                 {anggota.nama_lengkap}
                                                             </p>
-                                                            <p className="text-[10px] text-gray-400">
-                                                                Bergabung: {new Date(anggota.created_at).toLocaleDateString('id-ID')}
-                                                            </p>
+                                                            <div className="flex items-center gap-2 mt-1">
+                                                                <Phone className="w-3 h-3 text-gray-400" />
+                                                                <span className="text-[10px] text-gray-500">{anggota.no_whatsapp || '-'}</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    <div className="text-sm text-gray-600 space-y-1">
-                                                        <div className="flex items-center gap-2">
-                                                            <Mail className="w-3.5 h-3.5 text-gray-400" /> {anggota.email}
+                                                    <div className="text-sm space-y-1">
+                                                        <div className="font-bold text-indigo-600 bg-indigo-50 inline-block px-2 py-0.5 rounded text-xs border border-indigo-100">
+                                                            {anggota.role}
                                                         </div>
-                                                        <div className="flex items-center gap-2">
-                                                            <Phone className="w-3.5 h-3.5 text-gray-400" /> {anggota.no_whatsapp || '-'}
+                                                        <div className="text-xs text-gray-600 font-medium truncate max-w-[200px]" title={anggota.event_name}>
+                                                            {anggota.event_name}
                                                         </div>
                                                     </div>
                                                 </td>
@@ -343,7 +369,7 @@ export default function KelolaTimPage() {
                                     ) : (
                                         <tr>
                                             <td colSpan={3} className="px-6 py-16 text-center text-gray-500 font-medium">
-                                                Belum ada anggota tim. Silakan tambahkan dari form di samping.
+                                                Belum ada data kepanitiaan. Silakan tambahkan dari form di samping.
                                             </td>
                                         </tr>
                                     )}
@@ -367,22 +393,20 @@ export default function KelolaTimPage() {
                                             </div>
                                             <div>
                                                 <p className="font-bold text-gray-800 text-sm">{anggota.nama_lengkap}</p>
-                                                <p className="text-[10px] text-gray-400">Bergabung: {new Date(anggota.created_at).toLocaleDateString('id-ID')}</p>
+                                                <p className="text-[10px] text-gray-500">{anggota.no_whatsapp || '-'}</p>
                                             </div>
                                         </div>
-                                        <div className="bg-gray-50 rounded-lg p-3 space-y-2 mt-1">
-                                            <div className="flex items-center gap-2 text-xs text-gray-600">
-                                                <Mail className="w-3.5 h-3.5 text-gray-400 shrink-0" /> <span className="truncate">{anggota.email}</span>
-                                            </div>
-                                            <div className="flex items-center gap-2 text-xs text-gray-600">
-                                                <Phone className="w-3.5 h-3.5 text-gray-400 shrink-0" /> <span>{anggota.no_whatsapp || '-'}</span>
+                                        <div className="bg-gray-50 rounded-lg p-3 space-y-2 mt-1 border border-gray-100">
+                                            <div className="flex flex-col gap-1 text-xs">
+                                                <span className="font-bold text-indigo-600">{anggota.role}</span>
+                                                <span className="text-gray-600 truncate">{anggota.event_name}</span>
                                             </div>
                                         </div>
                                     </div>
                                 ))
                             ) : (
                                 <div className="text-center py-10 text-gray-500 font-medium text-sm">
-                                    Belum ada anggota tim. Silakan tambahkan dari form di atas.
+                                    Belum ada data kepanitiaan. Silakan tambahkan dari form di atas.
                                 </div>
                             )}
                         </div>

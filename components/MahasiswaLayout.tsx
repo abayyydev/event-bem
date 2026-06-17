@@ -7,45 +7,69 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, Grid3X3, Ticket, Receipt, Award, User,
-  LogOut, Menu, X, ChevronRight, MessageSquare, Bell, ChevronDown, ChevronLeft, Activity
+  LogOut, Menu, X, ChevronRight, MessageSquare, Bell, ChevronDown, ChevronLeft, Activity, Users
 } from "lucide-react";
 import React from "react";
+import api from "../lib/api";
 
 interface MahasiswaLayoutProps {
   children: React.ReactNode;
 }
-
-const menuItems = [
-  {
-    section: "MENU UTAMA", items: [
-      { href: "/mahasiswa/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-      { href: "/mahasiswa/katalog", icon: Grid3X3, label: "Katalog Event" },
-    ]
-  },
-  {
-    section: "AKTIVITAS", items: [
-      { href: "/mahasiswa/tiket", icon: Activity, label: "Aktivitas" },
-    ]
-  },
-  {
-    section: "AKUN", items: [
-      { href: "/mahasiswa/profil", icon: User, label: "Profil Saya" },
-    ]
-  },
-];
 
 export default function MahasiswaLayout({ children }: MahasiswaLayoutProps) {
   const pathname = usePathname();
   const [user, setUser] = useState<{ name: string; email: string; role?: string; foto_mahasiswa?: string } | null>(null);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isPanitia, setIsPanitia] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem("user");
       if (stored) setUser(JSON.parse(stored));
+      
+      // Cek apakah mahasiswa ini adalah panitia aktif
+      const checkPanitia = async () => {
+        try {
+          const res = await api.get('/mahasiswa/panitia-events');
+          if (res.data && res.data.length > 0) {
+            setIsPanitia(true);
+          }
+        } catch (err) {
+          console.error("Gagal mengecek status panitia:", err);
+        }
+      };
+      
+      if (stored) {
+        checkPanitia();
+      }
     }
   }, []);
+
+  const menuItems = [
+    {
+      section: "MENU UTAMA", items: [
+        { href: "/mahasiswa/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+        { href: "/mahasiswa/katalog", icon: Grid3X3, label: "Katalog Event" },
+      ]
+    },
+    {
+      section: "AKTIVITAS", items: [
+        { href: "/mahasiswa/tiket", icon: Activity, label: "Aktivitas" },
+      ]
+    },
+    // Tambahkan menu Kepanitiaan jika ia panitia
+    ...(isPanitia ? [{
+      section: "KEPANITIAAN", items: [
+        { href: "/mahasiswa/kelola-pendaftar", icon: Users, label: "Kelola Pendaftar" },
+      ]
+    }] : []),
+    {
+      section: "AKUN", items: [
+        { href: "/mahasiswa/profil", icon: User, label: "Profil Saya" },
+      ]
+    },
+  ];
 
   const handleLogout = () => {
     localStorage.clear();
