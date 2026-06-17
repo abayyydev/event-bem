@@ -6,7 +6,7 @@ import Link from "next/link";
 import { User, Mail, Lock, Loader2, UserPlus, Shield, Phone, Hash, Info } from "lucide-react";
 import axios from "axios";
 import api from "@/lib/axios"; // Changed to use standard axios instance if defined
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import Swal from 'sweetalert2';
 
 export default function RegisterPage() {
@@ -100,6 +100,11 @@ export default function RegisterPage() {
       setError(err.response?.data?.message || 'Gagal login via Google');
     }
   };
+
+  const login = useGoogleLogin({
+    onSuccess: handleGoogleSuccess,
+    onError: () => setError('Login Google dibatalkan atau gagal.'),
+  });
 
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || 'dummy_client_id_for_now'}>
@@ -207,13 +212,15 @@ export default function RegisterPage() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-4 items-center">
-                <GoogleLogin
-                  onSuccess={handleGoogleSuccess}
-                  onError={() => setError('Login Google dibatalkan atau gagal.')}
-                  shape="pill"
-                  text="signup_with"
-                />
+              <div className="flex flex-col gap-4 items-center w-full">
+                <button
+                  type="button"
+                  onClick={() => login()}
+                  className="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-xl font-bold shadow-sm hover:bg-gray-50 hover:shadow-md transition-all duration-200"
+                >
+                  <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo" className="w-5 h-5" />
+                  Daftar dengan Google
+                </button>
               </div>
             </>
           )}

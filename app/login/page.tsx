@@ -1,6 +1,6 @@
 "use client";
 
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import api from '../../lib/axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -71,6 +71,11 @@ export default function LoginPage() {
     setError('Login Google dibatalkan atau gagal.');
   };
 
+  const login = useGoogleLogin({
+    onSuccess: handleGoogleSuccess,
+    onError: handleGoogleError,
+  });
+
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || 'dummy_client_id_for_now'}>
       <div className="min-h-screen bg-gray-50 font-sans relative flex flex-col justify-center items-center py-12 px-4">
@@ -136,13 +141,15 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 items-center">
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={handleGoogleError}
-              shape="pill"
-              text="continue_with"
-            />
+          <div className="flex flex-col gap-4 items-center w-full">
+            <button
+              type="button"
+              onClick={() => login()}
+              className="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-xl font-bold shadow-sm hover:bg-gray-50 hover:shadow-md transition-all duration-200"
+            >
+              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo" className="w-5 h-5" />
+              Masuk dengan Google
+            </button>
           </div>
 
           <div className="mt-8 text-center text-sm text-gray-500 font-medium flex flex-col gap-3">
