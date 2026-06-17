@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">BEM Event</string>
+    <string name="title_activity_main">BEM Event</string>
+    <string name="package_name">com.bem.eventapp</string>
+    <string name="custom_url_scheme">com.bem.eventapp</string>
+</resources>

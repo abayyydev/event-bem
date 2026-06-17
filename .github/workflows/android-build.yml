@@ -1,0 +1,53 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch: # Memungkinkan Anda memicu build secara manual lewat tombol di GitHub
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Mengambil kode dari repository Anda
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Setup NodeJS
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 3. Setup Java 17 untuk Android
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # 4. Install NPM dependensi
+      - name: Install Dependencies
+        run: npm install
+
+      # 5. Sinkronisasi Capacitor
+      - name: Sync Capacitor
+        run: npx cap sync android
+
+      # 6. Memberi izin akses file Gradle
+      - name: Make gradlew executable
+        working-directory: ./android
+        run: chmod +x gradlew
+
+      # 7. Proses Build APK!
+      - name: Build Debug APK
+        working-directory: ./android
+        run: ./gradlew assembleDebug
+
+      # 8. Upload file APK yang sudah jadi ke halaman GitHub Actions
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: android/app/build/outputs/apk/debug/app-debug.apk
