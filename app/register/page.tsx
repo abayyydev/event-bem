@@ -84,8 +84,8 @@ function RegisterContent() {
 
   const handleGoogleSuccess = async (credentialResponse: any) => {
     try {
-      const { credential } = credentialResponse;
-      const res = await api.post('/auth/google', { token: credential, action: 'register' });
+      const tokenToUse = credentialResponse.access_token || credentialResponse.credential;
+      const res = await api.post('/auth/google', { token: tokenToUse, action: 'register' });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
       Swal.fire({
