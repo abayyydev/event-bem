@@ -221,7 +221,7 @@ export default function EditEventPage() {
         headers: { "Content-Type": "multipart/form-data" }
       });
       setSuccess(true);
-      setTimeout(() => router.push("/organizer/events"), 2000);
+      setTimeout(() => { window.location.href = "/organizer/events"; }, 2000);
 
     } catch (err: any) {
       setError(err.response?.data?.message || "Terjadi kesalahan saat menyimpan event.");

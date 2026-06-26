@@ -110,7 +110,9 @@ export default function ProfilPage() {
       }
 
       Swal.fire({ icon: "success", title: "Berhasil!", text: "Profil berhasil diperbarui.", timer: 1500, showConfirmButton: false });
-      setForm(prev => ({ ...prev, password_baru: "", konfirmasi_password: "" }));
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } catch (err: any) {
       Swal.fire("Gagal", err.response?.data?.message || "Gagal memperbarui profil", "error");
     } finally { setSaving(false); }
