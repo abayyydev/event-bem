@@ -12,13 +12,7 @@ export const getDynamicApiUrl = () => {
 
 // Helper untuk mendapatkan URL dasar Backend (misal untuk tag <img> /uploads)
 export const getBackendBaseUrl = () => {
-  if (typeof window !== 'undefined') {
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-      return 'http://localhost:5000';
-    }
-  }
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.ukmelrahma.my.id/api';
-  return apiUrl.replace(/\/api\/?$/, ''); // Menghapus '/api' di bagian akhir
+  return getDynamicApiUrl();
 };
 
 const api = axios.create({

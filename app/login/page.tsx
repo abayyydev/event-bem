@@ -48,20 +48,20 @@ function LoginContent() {
     }
   };
 
-    const handleGoogleSuccess = async (credentialResponse: any) => {
-      try {
-        const { credential } = credentialResponse;
-        const res = await api.post('/auth/google', { token: credential, action: 'login' });
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('user', JSON.stringify(res.data.user));
-        Swal.fire({
-          icon: 'success',
-          title: 'Login Berhasil',
-          text: 'Selamat datang kembali!',
-          timer: 1500,
-          showConfirmButton: false
-        });
-        router.push('/mahasiswa/dashboard');
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    try {
+      const { credential } = credentialResponse;
+      const res = await api.post('/auth/google', { token: credential, action: 'login' });
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+      Swal.fire({
+        icon: 'success',
+        title: 'Login Berhasil',
+        text: 'Selamat datang kembali!',
+        timer: 1500,
+        showConfirmButton: false
+      });
+      router.push('/mahasiswa/dashboard');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Gagal login via Google');
     }
@@ -155,9 +155,7 @@ function LoginContent() {
           <p>
             Belum punya akun? <Link href="/register" className="text-indigo-600 font-bold hover:text-indigo-500 transition-colors">Daftar di sini</Link>
           </p>
-          <p>
-            Masuk sebagai <Link href="/login/admin" className="text-indigo-600 font-bold hover:text-indigo-500 transition-colors">Penyelenggara / Admin?</Link>
-          </p>
+
         </div>
       </div>
     </div>
