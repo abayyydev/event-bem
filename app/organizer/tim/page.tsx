@@ -37,6 +37,12 @@ export default function KelolaTimPage() {
   const [events, setEvents] = useState<EventOption[]>([]);
   const [loading, setLoading] = useState(true);
   
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(tim.length / itemsPerPage);
+  const paginatedTim = tim.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  
   // Search Mahasiswa states
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Mahasiswa[]>([]);
@@ -326,8 +332,8 @@ export default function KelolaTimPage() {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-50">
-                                    {tim.length > 0 ? (
-                                        tim.map((anggota) => (
+                                    {paginatedTim.length > 0 ? (
+                                        paginatedTim.map((anggota) => (
                                             <tr key={anggota.id} className="hover:bg-indigo-50/30 transition-colors group">
                                                 <td className="px-6 py-4">
                                                     <div className="flex items-center gap-3">
@@ -379,8 +385,8 @@ export default function KelolaTimPage() {
 
                         {/* Mobile Cards */}
                         <div className="md:hidden p-4 space-y-4">
-                            {tim.length > 0 ? (
-                                tim.map((anggota) => (
+                            {paginatedTim.length > 0 ? (
+                                paginatedTim.map((anggota) => (
                                     <div key={anggota.id} className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm flex flex-col gap-3 relative">
                                         <button onClick={() => handleDelete(anggota.id, anggota.nama_lengkap)}
                                             className="absolute top-4 right-4 w-8 h-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center border border-red-100 transition-colors"
@@ -410,6 +416,42 @@ export default function KelolaTimPage() {
                                 </div>
                             )}
                         </div>
+
+                        {/* Pagination Footer */}
+                        {totalPages > 1 && (
+                          <div className="p-5 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4 bg-gray-50/50 rounded-b-2xl mt-auto">
+                            <span className="text-sm text-gray-500 font-medium">
+                              Halaman {currentPage} dari {totalPages} (Total {tim.length} Data)
+                            </span>
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                disabled={currentPage === 1}
+                                className="p-2 border border-gray-200 rounded-xl hover:bg-white disabled:opacity-40 transition-all shadow-sm bg-white"
+                              >
+                                &lt;
+                              </button>
+                              <div className="flex gap-1">
+                                {[...Array(totalPages)].map((_, i) => (
+                                  <button
+                                    key={i}
+                                    onClick={() => setCurrentPage(i + 1)}
+                                    className={`w-9 h-9 rounded-xl text-sm font-bold transition-all ${currentPage === i + 1 ? 'bg-indigo-600 text-white shadow-md' : 'bg-white border border-gray-200 text-gray-600 hover:border-indigo-300'}`}
+                                  >
+                                    {i + 1}
+                                  </button>
+                                ))}
+                              </div>
+                              <button
+                                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                disabled={currentPage === totalPages}
+                                className="p-2 border border-gray-200 rounded-xl hover:bg-white disabled:opacity-40 transition-all shadow-sm bg-white"
+                              >
+                                &gt;
+                              </button>
+                            </div>
+                          </div>
+                        )}
                     </div>
                 </div>
 

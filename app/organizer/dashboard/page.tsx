@@ -20,6 +20,12 @@ export default function OrganizerDashboard() {
   const [authMessage, setAuthMessage] = useState("");
   const [stats, setStats] = useState<any>(null);
   const [recentEvents, setRecentEvents] = useState<any[]>([]);
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(recentEvents.length / itemsPerPage);
+  const paginatedEvents = recentEvents.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   useEffect(() => {
     try {
@@ -222,8 +228,8 @@ export default function OrganizerDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {recentEvents.length > 0 ? (
-                    recentEvents.map((ev: any) => (
+                  {paginatedEvents.length > 0 ? (
+                    paginatedEvents.map((ev: any) => (
                       <tr key={ev.id} className="hover:bg-indigo-50/30 transition-colors">
                         <td className="p-5 font-bold text-slate-800 truncate max-w-[200px]" title={ev.judul}>{ev.judul}</td>
                         <td className="p-5 text-sm text-slate-600 font-medium">
@@ -256,8 +262,8 @@ export default function OrganizerDashboard() {
 
             {/* Mobile Cards */}
             <div className="md:hidden p-4 space-y-4">
-              {recentEvents.length > 0 ? (
-                recentEvents.map((ev: any) => (
+              {paginatedEvents.length > 0 ? (
+                paginatedEvents.map((ev: any) => (
                   <div key={ev.id} className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm relative overflow-hidden flex flex-col gap-3">
                     <div className={`absolute top-0 left-0 w-1.5 h-full ${ev.status === "approved" ? "bg-emerald-500" : "bg-amber-400"}`} />
                     <div className="pl-2">
@@ -290,6 +296,42 @@ export default function OrganizerDashboard() {
                 </div>
               )}
             </div>
+
+            {/* Pagination Footer */}
+            {totalPages > 1 && (
+              <div className="p-5 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4 bg-slate-50 rounded-b-3xl mt-auto">
+                <span className="text-sm text-slate-500 font-medium">
+                  Halaman {currentPage} dari {totalPages} (Total {recentEvents.length} Event)
+                </span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                    className="p-2 border border-slate-200 rounded-xl hover:bg-white disabled:opacity-40 transition-all shadow-sm bg-white text-slate-600"
+                  >
+                    &lt;
+                  </button>
+                  <div className="flex gap-1">
+                    {[...Array(totalPages)].map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setCurrentPage(i + 1)}
+                        className={`w-9 h-9 rounded-xl text-sm font-bold transition-all ${currentPage === i + 1 ? 'bg-indigo-600 text-white shadow-md' : 'bg-white border border-slate-200 text-slate-600 hover:border-indigo-300'}`}
+                      >
+                        {i + 1}
+                      </button>
+                    ))}
+                  </div>
+                  <button
+                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                    className="p-2 border border-slate-200 rounded-xl hover:bg-white disabled:opacity-40 transition-all shadow-sm bg-white text-slate-600"
+                  >
+                    &gt;
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

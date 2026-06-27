@@ -30,6 +30,10 @@ export default function DetailPendaftarPage() {
   const [eventData, setEventData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const navLinks = [
     { href: "/organizer/dashboard", icon: <Calendar className="w-5 h-5" />, label: "Dashboard" },
@@ -130,6 +134,9 @@ export default function DetailPendaftarPage() {
     p.email_peserta.toLowerCase().includes(searchTerm.toLowerCase()) ||
     p.kode_unik.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  
+  const totalPages = Math.ceil(filteredPendaftar.length / itemsPerPage);
+  const paginatedPendaftar = filteredPendaftar.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const hadirCount = pendaftar.filter(p => p.status_kehadiran === 'hadir').length;
 
@@ -201,7 +208,7 @@ export default function DetailPendaftarPage() {
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <Search className="w-5 h-5 text-indigo-400" />
                     </div>
-                    <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
+                    <input type="text" value={searchTerm} onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
                         placeholder="Cari nama peserta, email, atau kode tiket..."
                         className="block w-full pl-12 pr-4 py-4 bg-slate-50 border-transparent text-slate-900 placeholder-slate-400 rounded-2xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition-all duration-300 font-medium text-sm" />
                 </div>
@@ -224,8 +231,8 @@ export default function DetailPendaftarPage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-50">
-                            {filteredPendaftar.length > 0 ? (
-                                filteredPendaftar.map((p) => (
+                            {paginatedPendaftar.length > 0 ? (
+                                paginatedPendaftar.map((p) => (
                                     <tr key={p.id} className="hover:bg-indigo-50/30 transition-colors group">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
@@ -299,8 +306,8 @@ export default function DetailPendaftarPage() {
 
                 {/* Mobile Cards */}
                 <div className="md:hidden p-4 space-y-4">
-                    {filteredPendaftar.length > 0 ? (
-                        filteredPendaftar.map((p) => (
+                    {paginatedPendaftar.length > 0 ? (
+                        paginatedPendaftar.map((p) => (
                             <div key={p.id} className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm relative flex flex-col gap-3 overflow-hidden">
                                 <div className={`absolute top-0 left-0 w-1.5 h-full ${p.status_kehadiran === 'hadir' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
                                 <button onClick={() => handleDelete(p.id)}
@@ -365,6 +372,42 @@ export default function DetailPendaftarPage() {
                         </div>
                     )}
                 </div>
+
+                {/* Pagination Footer */}
+                {totalPages > 1 && (
+                  <div className="p-5 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4 bg-gray-50/50 rounded-b-3xl">
+                    <span className="text-sm text-gray-500 font-medium">
+                      Halaman {currentPage} dari {totalPages} (Total {filteredPendaftar.length} Data)
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                        className="p-2 border border-gray-200 rounded-xl hover:bg-white disabled:opacity-40 transition-all shadow-sm bg-white"
+                      >
+                        &lt;
+                      </button>
+                      <div className="flex gap-1">
+                        {[...Array(totalPages)].map((_, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setCurrentPage(i + 1)}
+                            className={`w-9 h-9 rounded-xl text-sm font-bold transition-all ${currentPage === i + 1 ? 'bg-indigo-600 text-white shadow-md' : 'bg-white border border-gray-200 text-gray-600 hover:border-indigo-300'}`}
+                          >
+                            {i + 1}
+                          </button>
+                        ))}
+                      </div>
+                      <button
+                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                        className="p-2 border border-gray-200 rounded-xl hover:bg-white disabled:opacity-40 transition-all shadow-sm bg-white"
+                      >
+                        &gt;
+                      </button>
+                    </div>
+                  </div>
+                )}
             </div>
         </div>
       </div>

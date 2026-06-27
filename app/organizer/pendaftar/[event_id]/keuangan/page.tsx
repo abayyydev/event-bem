@@ -56,6 +56,10 @@ export default function KeuanganEventPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTipe, setFilterTipe] = useState<"all" | "pendaftaran" | "denda">("all");
   const [filterStatus, setFilterStatus] = useState<"all" | "lunas" | "belum_lunas">("all");
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const navLinks = [
     { href: "/organizer/dashboard", icon: <Calendar className="w-5 h-5" />, label: "Dashboard" },
@@ -134,6 +138,9 @@ export default function KeuanganEventPage() {
 
     return matchesSearch && matchesTipe && matchesStatus;
   });
+  
+  const totalPages = Math.ceil(filteredRecords.length / itemsPerPage);
+  const paginatedRecords = filteredRecords.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   if (loading) {
     return (
@@ -294,7 +301,7 @@ export default function KeuanganEventPage() {
                 <input 
                   type="text" 
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
                   placeholder="Cari nama atau NIM peserta..."
                   className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-xs outline-none focus:ring-2 focus:ring-indigo-150"
                 />
@@ -309,7 +316,7 @@ export default function KeuanganEventPage() {
                 {/* Type Filter */}
                 <select 
                   value={filterTipe}
-                  onChange={(e: any) => setFilterTipe(e.target.value)}
+                  onChange={(e: any) => { setFilterTipe(e.target.value); setCurrentPage(1); }}
                   className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 outline-none focus:border-indigo-500"
                 >
                   <option value="all">Semua Jenis Pemasukan</option>
@@ -320,7 +327,7 @@ export default function KeuanganEventPage() {
                 {/* Status Filter */}
                 <select 
                   value={filterStatus}
-                  onChange={(e: any) => setFilterStatus(e.target.value)}
+                  onChange={(e: any) => { setFilterStatus(e.target.value); setCurrentPage(1); }}
                   className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 outline-none focus:border-indigo-500"
                 >
                   <option value="all">Semua Status Pelunasan</option>
@@ -344,8 +351,8 @@ export default function KeuanganEventPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-55 divide-slate-100 text-xs">
-                  {filteredRecords.length > 0 ? (
-                    filteredRecords.map((rec) => (
+                  {paginatedRecords.length > 0 ? (
+                    paginatedRecords.map((rec) => (
                       <tr key={rec.id} className="hover:bg-slate-50/50 transition-colors">
                         <td className="px-6 py-4">
                           <div className="font-extrabold text-slate-800">{rec.nama_peserta}</div>
@@ -399,8 +406,8 @@ export default function KeuanganEventPage() {
 
             {/* Mobile Cards */}
             <div className="md:hidden p-4 space-y-4 bg-slate-50">
-              {filteredRecords.length > 0 ? (
-                filteredRecords.map((rec) => (
+              {paginatedRecords.length > 0 ? (
+                paginatedRecords.map((rec) => (
                   <div key={rec.id} className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm relative overflow-hidden flex flex-col gap-3">
                     <div className={`absolute top-0 left-0 w-1.5 h-full ${rec.status === 'lunas' ? 'bg-emerald-500' : 'bg-amber-400'}`} />
                     <div className="pl-2">
@@ -452,6 +459,42 @@ export default function KeuanganEventPage() {
                 </div>
               )}
             </div>
+
+            {/* Pagination Footer */}
+            {totalPages > 1 && (
+              <div className="p-5 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4 bg-slate-50 rounded-b-3xl mt-auto">
+                <span className="text-sm text-slate-500 font-medium">
+                  Halaman {currentPage} dari {totalPages} (Total {filteredRecords.length} Data)
+                </span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                    className="p-2 border border-slate-200 rounded-xl hover:bg-white disabled:opacity-40 transition-all shadow-sm bg-white text-slate-600"
+                  >
+                    &lt;
+                  </button>
+                  <div className="flex gap-1">
+                    {[...Array(totalPages)].map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setCurrentPage(i + 1)}
+                        className={`w-9 h-9 rounded-xl text-sm font-bold transition-all ${currentPage === i + 1 ? 'bg-indigo-600 text-white shadow-md' : 'bg-white border border-slate-200 text-slate-600 hover:border-indigo-300'}`}
+                      >
+                        {i + 1}
+                      </button>
+                    ))}
+                  </div>
+                  <button
+                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                    className="p-2 border border-slate-200 rounded-xl hover:bg-white disabled:opacity-40 transition-all shadow-sm bg-white text-slate-600"
+                  >
+                    &gt;
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

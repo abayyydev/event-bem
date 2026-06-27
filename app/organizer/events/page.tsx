@@ -67,7 +67,7 @@ export default function KelolaEventPage() {
   const fetchEvents = async () => {
     try {
       setLoading(true);
-      const res = await api.get(`/events/manage?search=${searchTerm}&page=${currentPage}&limit=5`);
+      const res = await api.get(`/events/manage?search=${searchTerm}&page=${currentPage}&limit=10`);
       setEvents(res.data.data);
       setPagination(res.data.pagination);
     } catch (err) {

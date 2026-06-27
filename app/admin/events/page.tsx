@@ -45,6 +45,10 @@ export default function ManageEventsPage() {
   const [loadingData, setLoadingData] = useState(true);
   const [activeTab, setActiveTab] = useState<"pending" | "all">("pending");
   const [actionLoadingId, setActionLoadingId] = useState<number | null>(null);
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const fetchEvents = async () => {
     try {
@@ -190,6 +194,9 @@ export default function ManageEventsPage() {
   // Filter based on selected tab
   const pendingEvents = searchedEvents.filter(e => e.status === "draft");
   const displayEvents = activeTab === "pending" ? pendingEvents : searchedEvents;
+  
+  const totalPages = Math.ceil(displayEvents.length / itemsPerPage);
+  const paginatedEvents = displayEvents.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const navLinks = [
     { href: "/admin/dashboard", icon: <Activity className="w-5 h-5" />, label: "Statistik Global" },
@@ -251,7 +258,7 @@ export default function ManageEventsPage() {
           {/* Tabs Navigation */}
           <div className="flex border-b border-slate-200 mb-6 gap-2">
             <button
-              onClick={() => setActiveTab("pending")}
+              onClick={() => { setActiveTab("pending"); setCurrentPage(1); }}
               className={`px-5 py-3 text-sm font-bold flex items-center gap-2 border-b-2 transition-all ${activeTab === "pending"
                   ? "border-indigo-600 text-indigo-600 font-extrabold"
                   : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
@@ -265,7 +272,7 @@ export default function ManageEventsPage() {
               </span>
             </button>
             <button
-              onClick={() => setActiveTab("all")}
+              onClick={() => { setActiveTab("all"); setCurrentPage(1); }}
               className={`px-5 py-3 text-sm font-bold flex items-center gap-2 border-b-2 transition-all ${activeTab === "all"
                   ? "border-indigo-600 text-indigo-600 font-extrabold"
                   : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
@@ -288,7 +295,7 @@ export default function ManageEventsPage() {
               <input
                 type="text"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
                 placeholder="Cari event berdasarkan Judul, Penyelenggara UKM, atau Lokasi..."
                 className="block w-full pl-10 pr-4 py-3 bg-slate-50 border-transparent text-slate-900 placeholder-slate-400 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/25 transition-all text-sm"
               />
@@ -330,7 +337,7 @@ export default function ManageEventsPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 text-sm">
-                    {displayEvents.map((event) => {
+                    {paginatedEvents.map((event) => {
                       const isFree = event.tipe_event === 'gratis' || event.harga <= 0;
                       return (
                         <tr key={event.id} className="hover:bg-slate-50/50 transition-colors">
@@ -475,7 +482,7 @@ export default function ManageEventsPage() {
 
               {/* Mobile Cards */}
               <div className="md:hidden p-4 space-y-4">
-                {displayEvents.map((event) => {
+                {paginatedEvents.map((event) => {
                   const isFree = event.tipe_event === 'gratis' || event.harga <= 0;
                   return (
                     <div key={event.id} className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex flex-col gap-3 relative">
@@ -555,6 +562,42 @@ export default function ManageEventsPage() {
                   );
                 })}
               </div>
+              
+              {/* Pagination Footer */}
+              {totalPages > 1 && (
+                <div className="p-5 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4 bg-slate-50 rounded-b-3xl mt-auto">
+                  <span className="text-sm text-slate-500 font-medium">
+                    Halaman {currentPage} dari {totalPages} (Total {displayEvents.length} Data)
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                      disabled={currentPage === 1}
+                      className="p-2 border border-slate-200 rounded-xl hover:bg-white disabled:opacity-40 transition-all shadow-sm bg-white text-slate-600"
+                    >
+                      &lt;
+                    </button>
+                    <div className="flex gap-1">
+                      {[...Array(totalPages)].map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setCurrentPage(i + 1)}
+                          className={`w-9 h-9 rounded-xl text-sm font-bold transition-all ${currentPage === i + 1 ? 'bg-indigo-600 text-white shadow-md' : 'bg-white border border-slate-200 text-slate-600 hover:border-indigo-300'}`}
+                        >
+                          {i + 1}
+                        </button>
+                      ))}
+                    </div>
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                      disabled={currentPage === totalPages}
+                      className="p-2 border border-slate-200 rounded-xl hover:bg-white disabled:opacity-40 transition-all shadow-sm bg-white text-slate-600"
+                    >
+                      &gt;
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

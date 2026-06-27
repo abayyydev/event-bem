@@ -230,6 +230,13 @@ export default function ManageMahasiswaPage() {
       (m.prodi && m.prodi.toLowerCase().includes(query))
     );
   });
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  
+  const totalPages = Math.ceil(filteredMahasiswas.length / itemsPerPage);
+  const paginatedMahasiswas = filteredMahasiswas.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const navLinks = [
     { href: "/admin/dashboard", icon: <Activity className="w-5 h-5" />, label: "Statistik Global" },
@@ -306,7 +313,7 @@ export default function ManageMahasiswaPage() {
               <input 
                 type="text" 
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
                 placeholder="Cari mahasiswa berdasarkan Nama, NIM, Email, atau Program Studi..."
                 className="block w-full pl-10 pr-4 py-3 bg-slate-50 border-transparent text-slate-900 placeholder-slate-400 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/25 transition-all text-sm"
               />
@@ -337,14 +344,14 @@ export default function ManageMahasiswaPage() {
                         </div>
                       </td>
                     </tr>
-                  ) : filteredMahasiswas.length === 0 ? (
+                  ) : paginatedMahasiswas.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="py-16 text-center text-slate-500 font-medium">
                         Tidak ada data mahasiswa ditemukan.
                       </td>
                     </tr>
                   ) : (
-                    filteredMahasiswas.map((mhs) => (
+                    paginatedMahasiswas.map((mhs) => (
                       <tr key={mhs.id} className="hover:bg-slate-50/50 transition-colors">
                         
                         {/* Profile & Name */}
@@ -459,12 +466,12 @@ export default function ManageMahasiswaPage() {
                     <span className="font-medium text-sm">Memuat data mahasiswa...</span>
                   </div>
                 </div>
-              ) : filteredMahasiswas.length === 0 ? (
+              ) : paginatedMahasiswas.length === 0 ? (
                 <div className="py-16 text-center text-slate-500 font-medium text-sm">
                   Tidak ada data mahasiswa ditemukan.
                 </div>
               ) : (
-                filteredMahasiswas.map((mhs) => (
+                paginatedMahasiswas.map((mhs) => (
                   <div key={mhs.id} className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm relative overflow-hidden flex flex-col gap-3">
                     <div className={`absolute top-0 left-0 w-1.5 h-full ${mhs.status === 'active' ? 'bg-emerald-500' : 'bg-red-500'}`} />
                     <div className="flex justify-between items-start pl-2">
@@ -545,6 +552,42 @@ export default function ManageMahasiswaPage() {
                 ))
               )}
             </div>
+
+            {/* Pagination Footer */}
+            {totalPages > 1 && (
+              <div className="p-5 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4 bg-slate-50 rounded-b-3xl mt-auto">
+                <span className="text-sm text-slate-500 font-medium">
+                  Halaman {currentPage} dari {totalPages} (Total {filteredMahasiswas.length} Data)
+                </span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                    className="p-2 border border-slate-200 rounded-xl hover:bg-white disabled:opacity-40 transition-all shadow-sm bg-white text-slate-600"
+                  >
+                    &lt;
+                  </button>
+                  <div className="flex gap-1">
+                    {[...Array(totalPages)].map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setCurrentPage(i + 1)}
+                        className={`w-9 h-9 rounded-xl text-sm font-bold transition-all ${currentPage === i + 1 ? 'bg-indigo-600 text-white shadow-md' : 'bg-white border border-slate-200 text-slate-600 hover:border-indigo-300'}`}
+                      >
+                        {i + 1}
+                      </button>
+                    ))}
+                  </div>
+                  <button
+                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                    className="p-2 border border-slate-200 rounded-xl hover:bg-white disabled:opacity-40 transition-all shadow-sm bg-white text-slate-600"
+                  >
+                    &gt;
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -15,6 +15,10 @@ export default function RiwayatTransaksiPage() {
   const router = useRouter();
   const [transaksi, setTransaksi] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -49,6 +53,9 @@ export default function RiwayatTransaksiPage() {
   const totalTrx = transaksi.length;
   const pendingTrx = transaksi.filter(t => t.status_pembayaran === "pending").length;
   const successTrx = transaksi.filter(t => t.status_pembayaran === "paid" || t.status_pembayaran === "free").length;
+
+  const totalPages = Math.ceil(transaksi.length / itemsPerPage);
+  const paginatedTransaksi = transaksi.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const getStatusBadge = (status: string) => {
     const map: Record<string, { bg: string; label: string; icon: React.ReactNode }> = {
@@ -113,7 +120,7 @@ export default function RiwayatTransaksiPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {transaksi.length > 0 ? transaksi.map((row: any) => {
+                  {paginatedTransaksi.length > 0 ? paginatedTransaksi.map((row: any) => {
                     const badge = getStatusBadge(row.status_pembayaran);
                     return (
                       <tr key={row.id} className="hover:bg-indigo-50/30 transition-colors group">
@@ -179,7 +186,7 @@ export default function RiwayatTransaksiPage() {
 
             {/* Mobile Cards */}
             <div className="lg:hidden p-4 space-y-4">
-              {transaksi.length > 0 ? transaksi.map((row: any) => {
+              {paginatedTransaksi.length > 0 ? paginatedTransaksi.map((row: any) => {
                 const badge = getStatusBadge(row.status_pembayaran);
                 const borderColor = row.status_pembayaran === "paid" || row.status_pembayaran === "free" ? "bg-emerald-500" : row.status_pembayaran === "pending" ? "bg-amber-500" : "bg-slate-300";
                 return (
@@ -231,6 +238,42 @@ export default function RiwayatTransaksiPage() {
                 <div className="text-center py-12"><p className="text-slate-500 font-medium">Belum ada transaksi.</p></div>
               )}
             </div>
+            
+            {/* Pagination Footer */}
+            {totalPages > 1 && (
+              <div className="p-5 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4 bg-slate-50/50">
+                <span className="text-sm text-slate-500 font-medium">
+                  Halaman {currentPage} dari {totalPages} (Total {transaksi.length} Data)
+                </span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                    className="p-2 border border-slate-200 rounded-xl hover:bg-white disabled:opacity-40 transition-all shadow-sm bg-white"
+                  >
+                    &lt;
+                  </button>
+                  <div className="flex gap-1">
+                    {[...Array(totalPages)].map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setCurrentPage(i + 1)}
+                        className={`w-9 h-9 rounded-xl text-sm font-bold transition-all ${currentPage === i + 1 ? 'bg-indigo-600 text-white shadow-md' : 'bg-white border border-slate-200 text-slate-600 hover:border-indigo-300'}`}
+                      >
+                        {i + 1}
+                      </button>
+                    ))}
+                  </div>
+                  <button
+                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                    className="p-2 border border-slate-200 rounded-xl hover:bg-white disabled:opacity-40 transition-all shadow-sm bg-white"
+                  >
+                    &gt;
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Info Cards */}
