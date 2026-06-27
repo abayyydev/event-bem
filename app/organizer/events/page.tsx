@@ -200,7 +200,7 @@ export default function KelolaEventPage() {
                     </tr>
                   ) : (
                     events.map((event) => (
-                      <tr key={event.id} className="hover:bg-indigo-50/40 transition-colors duration-200 group relative">
+                      <tr key={event.id} className={`hover:bg-indigo-50/40 transition-colors duration-200 group ${openDropdownId === event.id ? 'relative z-50' : 'relative z-0'}`}>
                         {/* Kolom Event */}
                         <td className="px-6 py-5">
                           <div className="flex gap-4 items-center">
@@ -274,7 +274,7 @@ export default function KelolaEventPage() {
                         </td>
 
                         {/* Kolom Aksi */}
-                        <td className="px-6 py-5 text-center relative" ref={openDropdownId === event.id ? dropdownRef : null}>
+                        <td className={`px-6 py-5 text-center relative ${openDropdownId === event.id ? 'z-50' : 'z-0'}`} ref={openDropdownId === event.id ? dropdownRef : null}>
                           <button
                             onClick={() => setOpenDropdownId(openDropdownId === event.id ? null : event.id)}
                             className="inline-flex justify-center w-full rounded-lg border border-gray-200 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all"
