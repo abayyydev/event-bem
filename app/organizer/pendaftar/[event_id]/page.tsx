@@ -226,6 +226,9 @@ export default function DetailPendaftarPage() {
                                 {eventData?.sertifikat_custom_type === 'per_peserta' && (
                                     <th className="px-6 py-5 font-bold">Predikat</th>
                                 )}
+                                {eventData?.tipe_event === 'berbayar' && (
+                                    <th className="px-6 py-5 font-bold text-center">Status Pembayaran</th>
+                                )}
                                 <th className="px-6 py-5 font-bold text-center">Status Kehadiran</th>
                                 <th className="px-6 py-5 font-bold text-center">Aksi</th>
                             </tr>
@@ -274,6 +277,23 @@ export default function DetailPendaftarPage() {
                                                     placeholder="Isi Predikat..."
                                                     className="w-full px-3 py-1.5 border border-gray-200 rounded-md text-sm focus:border-indigo-500 outline-none bg-white transition-colors focus:bg-indigo-50/10"
                                                 />
+                                            </td>
+                                        )}
+                                        {eventData?.tipe_event === 'berbayar' && (
+                                            <td className="px-6 py-4 text-center">
+                                                {p.status_pembayaran === 'paid' ? (
+                                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600 border border-emerald-100">
+                                                        Lunas
+                                                    </span>
+                                                ) : p.status_pembayaran === 'free' ? (
+                                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-600 border border-indigo-100">
+                                                        Gratis
+                                                    </span>
+                                                ) : (
+                                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-600 border border-amber-100">
+                                                        Belum Lunas
+                                                    </span>
+                                                )}
                                             </td>
                                         )}
                                         <td className="px-6 py-4 text-center">
@@ -362,6 +382,18 @@ export default function DetailPendaftarPage() {
                                             placeholder="Isi Predikat..."
                                             className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-indigo-500 outline-none bg-white transition-colors"
                                         />
+                                    </div>
+                                )}
+                                {eventData?.tipe_event === 'berbayar' && (
+                                    <div className="pl-2 mt-1">
+                                        <label className="text-[10px] text-gray-400 font-bold uppercase block mb-1">Status Pembayaran</label>
+                                        {p.status_pembayaran === 'paid' ? (
+                                            <span className="text-emerald-600 font-bold text-xs">Lunas</span>
+                                        ) : p.status_pembayaran === 'free' ? (
+                                            <span className="text-indigo-600 font-bold text-xs">Gratis</span>
+                                        ) : (
+                                            <span className="text-amber-500 font-bold text-xs">Belum Lunas</span>
+                                        )}
                                     </div>
                                 )}
                             </div>
