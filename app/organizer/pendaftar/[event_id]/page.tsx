@@ -15,6 +15,7 @@ interface Pendaftar {
   telepon_peserta: string;
   kode_unik: string;
   status_kehadiran: string;
+  status_pembayaran: string;
   nim: string | null;
   prodi: string | null;
   sertifikat_predikat?: string | null;
