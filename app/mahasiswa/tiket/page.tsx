@@ -90,7 +90,7 @@ export default function TiketSayaPage() {
                             <p className="text-[10px] text-slate-400 uppercase font-bold">Kode Tiket</p>
                             <p className="text-sm font-mono font-bold text-slate-800 tracking-wide">{row.kode_unik}</p>
                           </div>
-                          <Link href={`/mahasiswa/tiket/${row.id}`} className="px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white text-xs font-bold rounded-xl shadow-lg shadow-emerald-200 transition-all flex items-center gap-2 transform hover:-translate-y-0.5">
+                          <Link href={`/mahasiswa/tiket/${btoa(row.id.toString())}`} className="px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white text-xs font-bold rounded-xl shadow-lg shadow-emerald-200 transition-all flex items-center gap-2 transform hover:-translate-y-0.5">
                             <QrCode className="w-4 h-4" /> Buka E-Ticket
                           </Link>
                         </div>
