@@ -255,17 +255,6 @@ export default function DetailPendaftarPage() {
                                                 {p.kode_unik}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-4 text-center">
-                                            {p.status_kehadiran === 'hadir' ? (
-                                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600 border border-emerald-100">
-                                                    <CheckCircle className="w-3.5 h-3.5" /> Hadir
-                                                </span>
-                                            ) : (
-                                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-600 border border-amber-100">
-                                                    <XCircle className="w-3.5 h-3.5" /> Belum Hadir
-                                                </span>
-                                            )}
-                                        </td>
                                         {eventData?.sertifikat_custom_type === 'per_peserta' && (
                                             <td className="px-6 py-4">
                                                 <input 
@@ -289,6 +278,17 @@ export default function DetailPendaftarPage() {
                                             ) : (
                                                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-600 border border-amber-100">
                                                     Belum Lunas
+                                                </span>
+                                            )}
+                                        </td>
+                                        <td className="px-6 py-4 text-center">
+                                            {p.status_kehadiran === 'hadir' ? (
+                                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600 border border-emerald-100">
+                                                    <CheckCircle className="w-3.5 h-3.5" /> Hadir
+                                                </span>
+                                            ) : (
+                                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-600 border border-amber-100">
+                                                    <XCircle className="w-3.5 h-3.5" /> Belum Hadir
                                                 </span>
                                             )}
                                         </td>
